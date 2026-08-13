@@ -44,7 +44,7 @@ export const socialLinks: Array<SocialLinkType> = [
   {
     name: 'Github',
     icon: 'github',
-    href: 'https://github.com/jinmin',
+    href: 'https://github.com/JinMin-Kim-11',
     external: true
   },
   {
