@@ -10,7 +10,7 @@ export default function SocialLinks() {
   return (
     <div>
       <div className="mt-6 flex flex-row flex-wrap justify-center md:justify-start items-center gap-1">
-        {socialLinks.map((link) => (
+        {socialLinks.filter((link) => link.name !== 'Wechat').map((link) => (
           <Link
             key={link.name}
             href={link.href}

@@ -14,7 +14,7 @@ export const email = '2509210811@qq.com'
 export const gmail = 'PollardPollard5h71vjh@gmail.com'
 export const phone = '13162293836'
 export const wechatId = 'Kim_2509210811'
-export const githubUsername = 'jinmin'
+export const githubUsername = 'JinMin-Kim-11'
 
 // about page
 export const aboutMeHeadline = "我是金旻，AI Agent 产品设计师，专注于企业 AI 应用的产品设计与落地实施。"
@@ -50,8 +50,8 @@ export const socialLinks: Array<SocialLinkType> = [
   {
     name: 'Wechat',
     icon: 'wechat',
-    href: 'https://www.jingdigital.com',
-    external: true
+    href: '#wechat',
+    external: false
   },
   {
     name: 'Phone',
