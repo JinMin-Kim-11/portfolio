@@ -42,7 +42,7 @@ export type ProjectItemType = {
       name: '海外 inrepli 营销 Agent 平台',
       description:
         '参与海外 B2B 营销 SaaS 平台 AI Agent 产品建设。分析海外企业营销场景用户需求，参与 AI Agent 功能设计和产品流程优化，协助分析用户交互反馈为产品迭代提供方向。',
-      link: { href: 'https://www.jingdigital.com', label: '径硕科技' },
+      link: { href: 'https://www.inrepli.com/', label: 'inrepli' },
       category: ['SaaS 产品'],
       techStack: ['AI Agent', 'SaaS', '营销自动化'],
       tags: ['海外B2B', '产品规划', '用户反馈'],
