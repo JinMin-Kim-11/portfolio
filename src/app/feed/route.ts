@@ -1,4 +1,6 @@
 import assert from 'assert'
+
+export const dynamic = 'force-static';
 import * as cheerio from 'cheerio'
 import { Feed } from 'feed'
 import { name, email } from '@/config/infoConfig'
