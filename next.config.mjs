@@ -23,9 +23,6 @@ const nextConfig = {
       }
     ],
   },
-  experimental: {
-    cpus: 1,
-  },
 }
 
 const withMDX = nextMDX({
