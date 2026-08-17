@@ -5,9 +5,6 @@ import { footerItems } from '@/config/siteConfig'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 import { name } from '@/config/infoConfig'
 import SocialLinks from '@/components/home/SocialLinks'
-import VisitData from '@/components/layout/VisitData'
-
-
 function NavLink({
   href,
   children,
@@ -45,7 +42,6 @@ export function Footer() {
                   <ThemeToggle />
                 </div>
                 <SocialLinks className='mt-0'/>
-                <VisitData />
               </div>
             </div>
           </ContainerInner>
