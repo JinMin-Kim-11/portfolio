@@ -9,9 +9,10 @@ import clsx from 'clsx'
 
 import { Container } from '@/components/layout/Container'
 import avatarImage from '@/images/avatar.jpg'
-import { navItems } from '@/config/siteConfig'
+import { getNavItems, getVersionPrefix } from '@/config/siteConfig'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 import { GithubRepo } from '@/components/shared/GithubRepo'
+import { VersionSwitcher } from '@/components/shared/VersionSwitcher'
 import { name } from '@/config/infoConfig'
 import { ChevronDownIcon, XIcon } from 'lucide-react'
 
@@ -33,9 +34,12 @@ function MobileNavItem({
   )
 }
 
-function MobileNavigation(
-  props: React.ComponentPropsWithoutRef<typeof Popover>,
-) {
+function MobileNavigation({
+  navItems,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof Popover> & {
+  navItems: Array<{ name: string; href: string }>
+}) {
   return (
     <Popover {...props}>
       <Popover.Button className="group flex items-center rounded-full px-4 py-2 text-sm font-medium shadow-lg ring-1 ring-muted backdrop-blur ">
@@ -118,7 +122,12 @@ function NavItem({
   )
 }
 
-function DesktopNavigation(props: React.ComponentPropsWithoutRef<'nav'>) {
+function DesktopNavigation({
+  navItems,
+  ...props
+}: React.ComponentPropsWithoutRef<'nav'> & {
+  navItems: Array<{ name: string; href: string }>
+}) {
   return (
     <nav {...props}>
       <ul className="flex rounded-full px-3 text-sm font-medium bg-card ring-1 ring-muted shadow-md backdrop-blur">
@@ -152,6 +161,7 @@ function AvatarContainer({
 }: React.ComponentPropsWithoutRef<'div'> & {
   showName?: boolean
 }) {
+  const homeHref = getVersionPrefix(usePathname()) || '/'
   return (
     <div className='flex flex-row items-center gap-2'>
       <div
@@ -163,7 +173,7 @@ function AvatarContainer({
       />
       {showName && (
         <Link
-          href="/"
+          href={homeHref}
           aria-label="首页"
           className='pointer-events-auto'
         >
@@ -181,9 +191,10 @@ function Avatar({
 }: Omit<React.ComponentPropsWithoutRef<typeof Link>, 'href'> & {
   large?: boolean
 }) {
+  const homeHref = getVersionPrefix(usePathname()) || '/'
   return (
     <Link
-      href="/"
+      href={homeHref}
       aria-label="首页"
       className={clsx(className, 'pointer-events-auto')}
       {...props}
@@ -203,7 +214,11 @@ function Avatar({
 }
 
 export function Header() {
-  let isHomePage = usePathname() === '/'
+  let pathname = usePathname()
+  let versionPrefix = getVersionPrefix(pathname)
+  let isHomePage = pathname === '/' || pathname === '/pm' || pathname === '/ai'
+  let currentNavItems = getNavItems(versionPrefix)
+  let homeHref = versionPrefix || '/'
 
   let headerRef = useRef<React.ElementRef<'div'>>(null)
   let avatarRef = useRef<React.ElementRef<'div'>>(null)
@@ -405,11 +420,12 @@ export function Header() {
                 )}
               </div>
               <div className="flex flex-1 justify-end md:justify-center">
-                <MobileNavigation className="pointer-events-auto md:hidden" />
-                <DesktopNavigation className="pointer-events-auto hidden md:block" />
+                <MobileNavigation className="pointer-events-auto md:hidden" navItems={currentNavItems} />
+                <DesktopNavigation className="pointer-events-auto hidden md:block" navItems={currentNavItems} />
               </div>
               <div className="flex justify-end md:flex-1">
                 <div className="pointer-events-auto flex flex-row items-center gap-2 md:mr-2">
+                  <VersionSwitcher />
                   <ThemeToggle />
                   <GithubRepo />
                 </div>

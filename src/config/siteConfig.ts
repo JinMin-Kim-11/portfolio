@@ -8,44 +8,30 @@ type NavItemType = {
   href: string
 }
 
-export const footerItems: Array<NavItemType> = [
-  {
-    name: '首页',
-    href: '/'
-  },
-  {
-    name: '关于',
-    href: '/about'
-  },
-  {
-    name: '项目',
-    href: '/projects'
-  },
-  {
-    name: '博客',
-    href: '/blogs'
-  },
-  {
-    name: '更新日志',
-    href: '/changelog'
-  }
-]
+export function getNavItems(prefix: string = ''): Array<NavItemType> {
+  return [
+    { name: '首页', href: prefix || '/' },
+    { name: '关于', href: `${prefix}/about` },
+    { name: '项目', href: `${prefix}/projects` },
+    { name: '博客', href: `${prefix}/blogs` },
+  ]
+}
 
-export const navItems: Array<NavItemType> = [
-  {
-    name: '首页',
-    href: '/'
-  },
-  {
-    name: '关于',
-    href: '/about'
-  },
-  {
-    name: '项目',
-    href: '/projects'
-  },
-  {
-    name: '博客',
-    href: '/blogs'
-  }
-]
+export function getFooterItems(prefix: string = ''): Array<NavItemType> {
+  return [
+    { name: '首页', href: prefix || '/' },
+    { name: '关于', href: `${prefix}/about` },
+    { name: '项目', href: `${prefix}/projects` },
+    { name: '博客', href: `${prefix}/blogs` },
+    { name: '更新日志', href: `${prefix}/changelog` },
+  ]
+}
+
+export function getVersionPrefix(pathname: string): string {
+  if (pathname.startsWith('/pm')) return '/pm'
+  if (pathname.startsWith('/ai')) return '/ai'
+  return ''
+}
+
+export const footerItems = getFooterItems()
+export const navItems = getNavItems()

@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { ContainerInner, ContainerOuter } from '@/components/layout/Container'
-import { footerItems } from '@/config/siteConfig'
+import { getFooterItems, getVersionPrefix } from '@/config/siteConfig'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 import { name } from '@/config/infoConfig'
 import SocialLinks from '@/components/home/SocialLinks'
@@ -23,6 +26,10 @@ function NavLink({
 }
 
 export function Footer() {
+  const pathname = usePathname()
+  const versionPrefix = getVersionPrefix(pathname)
+  const footerItems = getFooterItems(versionPrefix)
+
   return (
     <footer className="mt-32 flex-none">
       <ContainerOuter>
