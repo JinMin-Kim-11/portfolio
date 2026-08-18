@@ -7,19 +7,21 @@ import { ArrowRightIcon } from 'lucide-react'
 const versions = [
   {
     href: '/pm',
-    title: '产品经理',
-    subtitle: 'AI Agent 产品设计师',
-    description: '聚焦 AI 产品方案设计、用户需求分析、Agent 工作流规划与跨团队协作，展示产品设计与落地能力。',
-    highlights: ['产品方案设计', '用户需求分析', 'Agent 工作流规划', 'PRD 撰写'],
+    title: 'AI产品经理',
+    subtitle: 'AI Agent × 产品设计 × 用户需求',
+    description: '聚焦用户需求分析、AI 产品方案设计、Agent 工作流规划与 PRD 撰写，展示从需求到落地的产品能力。',
+    highlights: ['用户需求分析', 'AI产品方案设计', 'Agent工作流规划', 'PRD与产品迭代'],
     accent: 'from-blue-500 to-cyan-500',
+    cta: '进入产品经理版本',
   },
   {
     href: '/ai',
-    title: 'AI 解决方案工程师',
-    subtitle: 'Agent 开发 × RAG × 系统集成',
-    description: '聚焦 AI Agent 开发、RAG 知识库搭建、Prompt 工程与企业 AI 系统集成，展示技术落地与工程能力。',
-    highlights: ['RAG 知识库搭建', 'Agent 工作流开发', 'Prompt Engineering', '企业系统集成'],
+    title: 'AI解决方案工程师',
+    subtitle: 'AI Agent × 系统集成 × 企业AI',
+    description: '聚焦 AI Agent 工作流开发、RAG 知识库搭建、企业系统集成与 AI 应用交付，展示技术方案到生产部署的落地能力。',
+    highlights: ['AI Agent 工作流', 'RAG知识库', '企业系统集成', 'AI应用交付'],
     accent: 'from-purple-500 to-pink-500',
+    cta: '进入解决方案版本',
   },
 ]
 
@@ -33,10 +35,10 @@ export default function Home() {
             {name}
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-            软件工程背景 × AI Agent 实战经验，专注于企业 AI 应用的产品设计与技术落地。
+            软件工程背景 × AI Agent 实战经验，专注于企业 AI 应用的产品设计、解决方案与技术落地。
           </p>
           <p className="mt-3 text-sm text-muted-foreground/70">
-            选择你想了解的版本
+            从不同视角了解我的项目实践
           </p>
         </div>
 
@@ -69,7 +71,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="flex items-center text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
-                进入版本
+                {version.cta}
                 <ArrowRightIcon className="ml-1 h-4 w-4" />
               </div>
             </Link>
