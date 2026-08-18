@@ -7,7 +7,7 @@ import SocialLinks from '@/components/about/SocialLinks'
 
 export const metadata: Metadata = {
   title: '关于',
-  description: '金旻 - AI 解决方案工程师 | Agent 开发 × RAG × 企业 AI 系统集成',
+  description: '金旻 - AI解决方案工程师 | AI Agent × 系统集成 × 企业AI',
 }
 
 export default function AIAbout() {
