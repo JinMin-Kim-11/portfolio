@@ -1,4 +1,4 @@
-import { Container } from '@/components/layout/Container'
+﻿import { Container } from '@/components/layout/Container'
 import Feed from '@/components/home/Feed'
 import Career from '@/components/home/Career'
 import Education from '@/components/home/Education'
@@ -16,6 +16,8 @@ import { TweetGrid } from "@/components/home/TweetGrid";
 import { MarqueeVertical } from '@/components/home/MarqueeVertical'
 import Link from 'next/link'
 import { ChevronRightIcon } from 'lucide-react'
+import Image from 'next/image'
+import portraitImage from '@/images/portrait.jpg'
 
 interface VersionHomeProps {
   headline: string
@@ -50,8 +52,20 @@ export default async function VersionHome({
             </p>
             <SocialLinks className='md:mt-24'/>
           </div>
-          <div className="relative flex size-full items-center justify-center overflow-hidden w-full px-20 md:px-0 md:w-2/3 ml-auto md:mr-8">
-            <IconCloud iconSlugs={techIcons} />
+          <div className="relative flex flex-col size-full items-center justify-center gap-6 overflow-hidden w-full px-20 md:px-0 md:w-2/3 ml-auto md:mr-8">
+            <div className={"relative flex-shrink-0"}>
+              <Image
+                src={portraitImage}
+                alt={"金旻"}
+                width={180}
+                height={180}
+                priority
+                className={"aspect-square rounded-full object-cover shadow-xl ring-4 ring-white/50 dark:ring-zinc-800/50"}
+              />
+            </div>
+            <div className={"flex items-center justify-center"}>
+              <IconCloud iconSlugs={techIcons} />
+            </div>
           </div>
         </div>
         <div className="mt-6 border-t border-zinc-100 py-8 dark:border-zinc-700/40">
