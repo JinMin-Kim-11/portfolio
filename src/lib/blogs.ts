@@ -9,6 +9,7 @@ export type BlogType = {
   author: string
   date: string
   slug: string
+  version?: string
 }
 
 async function importBlog(
@@ -18,9 +19,9 @@ async function importBlog(
     path.join(process.cwd(), 'src/content/blog', blogFilename),
     'utf-8'
   )
-  
+
   const { data } = matter(source)
-  
+
   // @ts-expect-error
   return {
     slug: blogFilename.replace(/\.mdx$/, ''),
@@ -38,13 +39,17 @@ export async function getAllBlogs() {
   return blogs.sort((a, z) => {
     const aDate = a.date ? +new Date(a.date) : 0;
     const zDate = z.date ? +new Date(z.date) : 0;
-    return zDate - aDate;
+    return zDate - aDate
   })
+}
+
+export async function getBlogsByVersion(version: string) {
+  const blogs = await getAllBlogs()
+  return blogs.filter(blog => blog.version === version)
 }
 
 export async function getBlogBySlug(slug: string): Promise<BlogType | null> {
   try {
-    // 移除可能存在的 .mdx 扩展名
     const cleanSlug = slug.replace(/\.mdx$/, '')
     return await importBlog(`${cleanSlug}.mdx`)
   } catch (error) {
