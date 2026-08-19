@@ -7,11 +7,10 @@ import { BlogCard } from '@/components/home/BlogCard'
 import { getBlogsByVersion, type BlogType } from '@/lib/blogs'
 import { ProjectCard } from '@/components/project/ProjectCard'
 import { GithubProjectCard } from '@/components/project/GithubProjectCard'
-import { githubProjects, blogHeadLine, blogIntro, techIcons, activityHeadLine, activityIntro, tweetIds } from '@/config/infoConfig'
+import { githubProjects, blogHeadLine, blogIntro, activityHeadLine, activityIntro, tweetIds } from '@/config/infoConfig'
 import { type ProjectItemType } from '@/config/projects'
 import GitHubSnake from '@/components/home/GitHubSnake'
 import { CustomIcon } from '@/components/shared/CustomIcon'
-import IconCloud from "@/components/ui/icon-cloud";
 import { TweetGrid } from "@/components/home/TweetGrid";
 import { MarqueeVertical } from '@/components/home/MarqueeVertical'
 import Link from 'next/link'
@@ -52,19 +51,16 @@ export default async function VersionHome({
             </p>
             <SocialLinks className='md:mt-24'/>
           </div>
-          <div className="relative flex flex-col size-full items-center justify-center gap-6 overflow-hidden w-full px-20 md:px-0 md:w-2/3 ml-auto md:mr-8">
+          <div className="relative flex size-full items-center justify-center overflow-hidden w-full px-20 md:px-0 md:w-2/3 ml-auto md:mr-8">
             <div className={"relative flex-shrink-0"}>
               <Image
                 src={portraitImage}
                 alt={"金旻"}
-                width={180}
-                height={180}
+                width={320}
+                height={320}
                 priority
-                className={"aspect-square rounded-full object-cover shadow-xl ring-4 ring-white/50 dark:ring-zinc-800/50"}
+                className={"aspect-square rounded-full object-cover shadow-2xl ring-4 ring-white/50 dark:ring-zinc-800/50"}
               />
-            </div>
-            <div className={"flex items-center justify-center"}>
-              <IconCloud iconSlugs={techIcons} />
             </div>
           </div>
         </div>
