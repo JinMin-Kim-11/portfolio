@@ -1,5 +1,5 @@
 
-// education 
+// education
 export type EducationItemType = {
     school: string
     major: string
@@ -7,23 +7,26 @@ export type EducationItemType = {
     logo: string
     start: string
     end: string
+    degree?: string
   }
-  
-  
-  
+
+
+
   export const educationList: Array<EducationItemType> = [
     {
       school: '上海建桥学院',
-      major: '软件工程',
+      major: '软件工程（专升本）',
       logo: 'college',
       start: '2024',
-      end: '2026'
+      end: '2026',
+      degree: '本科'
     },
     {
       school: '上海建桥学院',
       major: '计算机科学技术',
       logo: 'college',
       start: '2021',
-      end: '2024'
+      end: '2024',
+      degree: '专科'
     },
   ]
