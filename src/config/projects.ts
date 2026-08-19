@@ -30,7 +30,7 @@ export type ProjectItemType = {
       techStack: ['AI Agent', 'RAG', 'Prompt Engineering', '知识库'],
       tags: ['售前咨询', '获客SDR', '工作流设计'],
       role: 'AI 产品实习生',
-      date: '2025.11 - 2026.07',
+      date: '2025.11 - 2026.03',
       highlights: [
         '针对海外客户咨询时差问题，设计 7×24 小时 AI 销售助手方案，覆盖售前咨询全流程',
         '完成 Agent 工作流设计：意图识别 → 知识库检索 → 话术生成 → 人工转接，实现自动应答与人工兜底',
@@ -49,7 +49,7 @@ export type ProjectItemType = {
       techStack: ['OpenClaw', '企业微信', 'Kubernetes', 'Git', '数据库'],
       tags: ['企业效率', '系统集成', '自然语言查询'],
       role: 'AI 产品实习生',
-      date: '2025.11 - 2026.07',
+      date: '2026.03 - 2026.04',
       highlights: [
         '以企业微信为统一入口，设计自然语言查询流程，降低内部工具使用门槛',
         '推动数据库、Git、Kubernetes 等多数据源接入，实现一站式信息查询',
@@ -68,7 +68,7 @@ export type ProjectItemType = {
       techStack: ['AI Agent', 'SaaS', '营销自动化'],
       tags: ['海外B2B', '产品规划', '用户反馈'],
       role: 'AI 产品实习生',
-      date: '2025.11 - 2026.07',
+      date: '2026.05 - 2026.07',
       highlights: [
         '深入分析海外 B2B 营销场景，梳理用户旅程与核心痛点',
         '参与 AI Agent 功能设计，包括邮件营销自动化、客户画像分析、智能推荐等模块',
@@ -87,7 +87,7 @@ export type ProjectItemType = {
       techStack: ['Python', 'Flask', 'MySQL', 'HTML/CSS/JS', 'Bootstrap'],
       tags: ['独立开发', '多角色系统', '全栈'],
       role: '独立开发者',
-      date: '2024 - 2025',
+      date: '2025.09 - 2025.11',
       highlights: [
         '独立完成全栈开发，设计三角色权限体系（学生/教师/管理员）',
         '实现课程管理模块：课程发布、视频上传、学习进度追踪',
