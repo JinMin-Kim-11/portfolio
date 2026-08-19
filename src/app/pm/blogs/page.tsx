@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import { Card } from '@/components/shared/Card'
 import { SimpleLayout } from '@/components/layout/SimpleLayout'
-import { type BlogType, getAllBlogs } from '@/lib/blogs'
+import { type BlogType, getBlogsByVersion } from '@/lib/blogs'
 import { formatDate } from '@/lib/formatDate'
 import { blogHeadLine, blogIntro } from '@/config/infoConfig'
 
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 }
 
 export default async function PMBlogsIndex() {
-  let blogs = await getAllBlogs()
+  let blogs = await getBlogsByVersion('pm')
 
   return (
     <SimpleLayout
@@ -50,7 +50,7 @@ export default async function PMBlogsIndex() {
       <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
         <div className="flex max-w-3xl flex-col space-y-16">
           {blogs.map((blog: BlogType) => (
-            <Blog key={blog.slug} blog={blog} basePath="" />
+            <Blog key={blog.slug} blog={blog} basePath="/pm" />
           ))}
         </div>
       </div>
