@@ -1,4 +1,4 @@
-// changelog
+﻿// changelog
 export const changelogHeadLine = "网站更新记录"
 export const changelogIntro = "这个作品集网站的最新变化。"
 
@@ -52,6 +52,10 @@ export const changelogList: Array<ChangelogItemType> = [
       {
         title: '🚀 作品集网站上线',
         description: '基于 coreychiu-portfolio-template 搭建个人作品集网站，展示项目经历、职业背景与个人简介。'
+      },
+      {
+        title: '📝 新增博客：从 Vercel 到 Cloudflare Pages 部署踩坑记录',
+        description: '记录从 Vercel 迁移到 Cloudflare Pages 的完整过程，包括 OpenNext 适配器与静态导出冲突、trailingSlash 解决子路径 404、GitHub 集成构建失败等问题与解决方案。'
       },
     ]
   },
