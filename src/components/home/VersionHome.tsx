@@ -4,7 +4,7 @@ import Career from '@/components/home/Career'
 import Education from '@/components/home/Education'
 import SocialLinks from '@/components/home/SocialLinks'
 import { BlogCard } from '@/components/home/BlogCard'
-import { getAllBlogs, type BlogType } from '@/lib/blogs'
+import { getBlogsByVersion, type BlogType } from '@/lib/blogs'
 import { ProjectCard } from '@/components/project/ProjectCard'
 import { GithubProjectCard } from '@/components/project/GithubProjectCard'
 import { githubProjects, blogHeadLine, blogIntro, techIcons, activityHeadLine, activityIntro, tweetIds } from '@/config/infoConfig'
@@ -34,7 +34,7 @@ export default async function VersionHome({
   projects,
   basePath,
 }: VersionHomeProps) {
-  let blogList = (await getAllBlogs()).slice(0, 4)
+  let blogList = (await getBlogsByVersion(basePath.replace('/', '') || 'pm')).slice(0, 4)
 
   return (
     <>
@@ -103,7 +103,7 @@ export default async function VersionHome({
           {/* blog */}
           <div className="flex flex-col gap-16">
             {blogList.map((blog: BlogType) => (
-              <BlogCard key={blog.slug} blog={blog} titleAs='h3' basePath=""/>
+              <BlogCard key={blog.slug} blog={blog} titleAs='h3' basePath={basePath}/>
             ))}
             <Link href={`${basePath}/blogs`} className="flex flex-row items-center text-sm text-primary hover:underline capitalize font-semibold">阅读更多博客
               <ChevronRightIcon className="ml-1 h-4 w-4 stroke-current" />
