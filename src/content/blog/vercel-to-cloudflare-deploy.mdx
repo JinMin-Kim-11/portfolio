@@ -1,0 +1,112 @@
+---
+title: '从 Vercel 到 Cloudflare Pages：Next.js 静态作品集的部署踩坑记录'
+description: '国内访问可达性是个人作品集的硬约束。记录我从 Vercel 迁移到 Cloudflare Pages 的完整过程，包括 OpenNext 适配器冲突、trailingSlash 子路径 404 等踩坑与解决方案。'
+date: '2026-08-19'
+version: 'ai'
+---
+
+## 问题起点：Vercel 国内无法访问
+
+我的作品集最初部署在 Vercel 上。Vercel 对 Next.js 的支持非常好，零配置就能部署。但有一个致命问题：国内用户无法直接访问，需要 VPN。
+
+对于一个求职用的作品集网站，如果 HR 打不开链接，就等于没有。
+
+## 迁移到 Cloudflare Pages
+
+Cloudflare Pages 提供免费的静态托管，国内可达性比 Vercel 好很多。但迁移过程踩了不少坑。
+
+### 坑一：OpenNext 适配器与静态导出冲突
+
+Cloudflare Pages 创建项目时，如果选择 Next.js Framework preset，会自动使用 `@opennextjs/cloudflare` 适配器。这个适配器期望的是 SSR/SSG 混合模式，而我的项目用的是 `output: 'export'` 纯静态导出。
+
+构建时报错：
+
+```
+ENOENT: no such file or directory, open
+'/opt/buildhome/repo/.next/standalone/.next/server/pages-manifest.json'
+```
+
+**解决方案**：Framework preset 设为 `None`，Build command 设为 `npm run build`，Build output directory 设为 `out`。绕过 Cloudflare 构建器，改用本地构建 + wrangler 直接上传。
+
+### 坑二：子路径路由 404
+
+双版本作品集使用子路径路由 `/pm/` 和 `/ai/`。部署后发现这两个路径返回 404。
+
+原因是：Next.js 静态导出默认生成 `pm.html`，而 Cloudflare Pages 的静态托管无法正确将 `/pm/` 映射到 `pm.html`。
+
+**解决方案**：在 `next.config.mjs` 中添加 `trailingSlash: true`。这会让静态导出生成 `pm/index.html` 而非 `pm.html`，Cloudflare Pages 就能正确路由了。
+
+```javascript
+const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  // ...其他配置
+}
+```
+
+### 坑三：GitHub 集成构建失败后无法回退
+
+最初我把 GitHub 仓库连接到 Cloudflare Pages，每次 push 自动触发构建。但构建失败后，Cloudflare 不会自动回退到上一个成功的部署版本，导致网站长时间不可用。
+
+**解决方案**：改用 wrangler CLI 直接上传构建产物。这样我可以完全控制构建过程，确保上传的文件都是正确的。
+
+## 最终部署工作流
+
+### 方法一：GitHub API 修改文件（无需本地 git）
+
+当只需要修改配置文件时，通过 GitHub Contents API 直接提交：
+
+```powershell
+$token = "ghp_xxx"
+$headers = @{ Authorization = "token $token" }
+
+# 获取文件当前 SHA
+$resp = Invoke-RestMethod -Uri "https://api.github.com/repos/USER/REPO/contents/path/to/file"
+$sha = $resp.sha
+
+# 编码新内容并提交
+$bytes = [System.Text.Encoding]::UTF8.GetBytes($newContent)
+$base64 = [System.Convert]::ToBase64String($bytes)
+$body = @{ message = "update file"; content = $base64; sha = $sha } | ConvertTo-Json
+Invoke-RestMethod -Uri $apiUrl -Method Put -Headers $headers -Body $body
+```
+
+### 方法二：本地构建 + wrangler 部署（推荐）
+
+```powershell
+# 1. 下载最新代码
+Invoke-WebRequest -Uri "https://github.com/USER/REPO/archive/main.zip" -OutFile "latest.zip"
+
+# 2. 构建后部署
+$env:CLOUDFLARE_API_TOKEN = "cfut_xxx"
+$env:CLOUDFLARE_ACCOUNT_ID = "xxx"
+npx wrangler pages deploy out --project-name=PROJECT --branch=main
+```
+
+## 关键配置总结
+
+| 配置项 | 作用 | 不加的后果 |
+|--------|------|-----------|
+| `output: 'export'` | 启用静态导出，生成 out/ 目录 | 无法生成可上传的静态文件 |
+| `trailingSlash: true` | 生成 pm/index.html 而非 pm.html | 子路径 /pm/ 和 /ai/ 返回 404 |
+| Framework preset: None | 绕过 OpenNext 适配器 | 构建报 ENOENT 错误 |
+
+## 部署后验证
+
+```powershell
+$urls = @(
+    "https://yoursite.pages.dev/",
+    "https://yoursite.pages.dev/pm/",
+    "https://yoursite.pages.dev/ai/"
+)
+foreach ($url in $urls) {
+    $r = Invoke-WebRequest -Uri $url -UseBasicParsing
+    Write-Host "[$($r.StatusCode)] $url"
+}
+```
+
+三个页面都返回 200，部署完成。
+
+## 总结
+
+国内访问可达性是个人作品集的硬约束。选对部署平台比选对框架更重要。Cloudflare Pages + 静态导出 + wrangler 直接上传，是目前我找到的最可靠方案。
