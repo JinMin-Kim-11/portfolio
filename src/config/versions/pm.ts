@@ -26,7 +26,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['AI Agent', 'RAG', 'Prompt Engineering', '知识库'],
     tags: ['用户需求分析', '产品方案', 'Agent工作流'],
     role: 'AI 产品实习生',
-    date: '2025.11 - 2026.07',
+    date: '2025.11 - 2026.03',
     highlights: [
       '业务问题：海外客户咨询存在时差障碍，人工销售团队无法 7×24 小时响应，潜在客户流失率高',
       '产品方案：设计 AI 销售助手产品方案，覆盖售前咨询全流程，从意图识别到人工转接形成完整闭环',
@@ -45,7 +45,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['OpenClaw', '企业微信', 'Kubernetes', 'Git', '数据库'],
     tags: ['内部效率', '产品设计', '功能规划'],
     role: 'AI 产品实习生',
-    date: '2025.11 - 2026.07',
+    date: '2026.03 - 2026.04',
     highlights: [
       '业务问题：内部员工获取开发数据、周报等信息需切换多个系统，耗时且体验差',
       '产品方案：以企业微信为统一入口，设计自然语言查询产品方案，降低工具使用门槛',
@@ -64,7 +64,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['AI Agent', 'SaaS', '营销自动化'],
     tags: ['海外B2B', '需求调研', '产品规划'],
     role: 'AI 产品实习生',
-    date: '2025.11 - 2026.07',
+    date: '2026.05 - 2026.07',
     highlights: [
       '业务问题：海外 B2B 营销人员缺乏智能化工具，邮件营销、客户画像分析等环节效率不足',
       '需求调研：深入分析海外 B2B 营销场景，梳理用户旅程与核心痛点，输出需求调研报告',
@@ -83,7 +83,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['Python', 'Flask', 'MySQL', 'HTML/CSS/JS', 'Bootstrap'],
     tags: ['独立开发', '产品设计', '全栈'],
     role: '独立开发者',
-    date: '2024 - 2025',
+    date: '2025.09 - 2025.11',
     highlights: [
       '业务问题：在线学习平台需支持学生、教师、管理员三方协作，现有工具功能分散',
       '产品方案：设计三角色权限体系，规划课程管理、题库考试、社区交流等完整功能模块',
