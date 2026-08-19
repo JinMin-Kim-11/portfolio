@@ -43,6 +43,15 @@ export const changelogList: Array<ChangelogItemType> = [
     ]
   },
   {
+    date: '2026-08-13',
+    content: [
+      {
+        title: '🚀 网站从 Vercel 迁移到 Cloudflare Pages',
+        description: '为解决 Vercel 国内无法访问的问题，将作品集网站迁移至 Cloudflare Pages。迁移过程中解决 OpenNext 适配器与静态导出冲突（Framework preset 设为 None）、trailingSlash: true 修复子路径路由 404、改用 wrangler CLI 直接上传构建产物，最终实现国内可直接访问。'
+      },
+    ]
+  },
+  {
     date: '2026-08-12',
     content: [
       {
@@ -52,10 +61,6 @@ export const changelogList: Array<ChangelogItemType> = [
       {
         title: '🚀 作品集网站上线',
         description: '基于 coreychiu-portfolio-template 搭建个人作品集网站，展示项目经历、职业背景与个人简介。'
-      },
-      {
-        title: '📝 新增博客：从 Vercel 到 Cloudflare Pages 部署踩坑记录',
-        description: '记录从 Vercel 迁移到 Cloudflare Pages 的完整过程，包括 OpenNext 适配器与静态导出冲突、trailingSlash 解决子路径 404、GitHub 集成构建失败等问题与解决方案。'
       },
     ]
   },
