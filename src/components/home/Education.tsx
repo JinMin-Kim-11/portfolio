@@ -18,6 +18,9 @@ function EducationItem({ educationItem }: { educationItem: EducationItemType }) 
         <dt className="sr-only">Company</dt>
         <dd className="w-full flex-none text-sm font-medium">
           {educationItem.school}
+          {educationItem.degree && (
+            <span className="ml-2 text-xs text-muted-foreground">（{educationItem.degree}）</span>
+          )}
         </dd>
         <dt className="sr-only">Title</dt>
         <dd className="text-xs text-muted-foreground">
