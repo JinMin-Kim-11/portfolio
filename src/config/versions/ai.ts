@@ -1,4 +1,4 @@
-import { type ProjectItemType } from '@/config/projects'
+﻿import { type ProjectItemType } from '@/config/projects'
 
 export const headline = 'AI解决方案工程师 | AI Agent × 系统集成 × 企业AI'
 export const introduction = '我关注如何将 AI 能力转化为可部署、可使用的企业解决方案。熟悉 AI Agent 工作流开发、RAG 知识库搭建与企业系统集成，能够将大模型能力与数据库、Git、K8s 等系统深度集成，推动 AI 解决方案从技术验证到生产部署全流程。'
@@ -21,6 +21,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '企业内部信息获取依赖多系统切换，缺乏统一入口。负责 AI 工具的 Agent 开发与系统集成，通过企业微信接入 AI 能力，实现数据库、Git、K8s 等多数据源的自然语言查询，完成 Git 提交统计、部门周报自动生成等 AI 自动化功能开发。',
     link: { href: 'https://www.jingdigital.com', label: '径硕科技' },
+    logo: '/images/icon/jingdigital.ico',
     category: ['AI 工具'],
     techStack: ['OpenClaw', '企业微信', 'Kubernetes', 'Git', '数据库'],
     tags: ['Agent开发', '系统集成', '企业交付'],
@@ -39,6 +40,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '海外客户咨询存在时差障碍，人工团队无法全天候响应。负责 AI 销售助手的 RAG 知识库搭建与 Prompt 工程，构建知识库检索系统，设计多轮对话 Prompt 模板，实现意图识别、知识检索、话术生成与人工转接的 Agent 工作流。',
     link: { href: 'https://www.wuxibiologics.com', label: '药明生物' },
+    logo: '/images/icon/wuxibiologics.ico',
     category: ['AI Agent'],
     techStack: ['AI Agent', 'RAG', 'Prompt Engineering', '知识库'],
     tags: ['RAG搭建', 'Agent工作流', 'AI交付'],
@@ -57,6 +59,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '海外 B2B 营销场景缺乏智能化工具支持。参与营销 SaaS 平台 AI Agent 功能开发，分析海外营销场景技术需求，参与 Agent 功能实现与产品流程优化，协助分析用户交互数据为技术迭代提供方向。',
     link: { href: 'https://www.inrepli.com/', label: 'inrepli' },
+    logo: '/images/icon/inrepli.png',
     category: ['SaaS 产品'],
     techStack: ['AI Agent', 'SaaS', '营销自动化'],
     tags: ['Agent开发', 'SaaS平台', '功能交付'],
@@ -75,6 +78,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '在线教育场景下，学习平台需要支持多角色协作与完整学习闭环。独立完成全栈开发，基于 Flask 框架实现三角色权限系统，设计 MySQL 数据库结构并优化查询性能。',
     link: { href: '#', label: '个人项目' },
+    logo: '/images/icon/python.ico',
     category: ['全栈开发'],
     techStack: ['Python', 'Flask', 'MySQL', 'HTML/CSS/JS', 'Bootstrap'],
     tags: ['独立开发', '全栈', '系统设计'],
