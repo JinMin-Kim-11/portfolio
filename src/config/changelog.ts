@@ -14,6 +14,35 @@ export type ChangelogItemType = {
 
 export const changelogList: Array<ChangelogItemType> = [
   {
+    date: '2026-08-19',
+    content: [
+      {
+        title: '🔄 双版本作品集策略调整',
+        description: '核心策略从"两个职业身份"改为"同一人，不同能力侧重点"。首页 headline 增加"解决方案"关键词，让两个入口自然衔接。'
+      },
+      {
+        title: '✏️ 产品经理入口优化',
+        description: '标题从"AI Agent 产品设计师"改为"AI产品经理"，贴近招聘市场搜索关键词。副标题改为"AI Agent × 产品设计 × 用户需求"，标签调整为用户需求分析、AI产品方案设计、Agent工作流规划、PRD与产品迭代。'
+      },
+      {
+        title: '✏️ AI解决方案工程师入口优化',
+        description: '副标题从"Agent开发 × RAG × 系统集成"改为"AI Agent × 系统集成 × 企业AI"，突出解决方案工程师核心能力而非纯RAG开发。标签调整为AI Agent工作流、RAG知识库、企业系统集成、AI应用交付。'
+      },
+      {
+        title: '📝 选择区域文案优化',
+        description: '将"选择你想了解的版本"改为"从不同视角了解我的项目实践"，CTA按钮改为"进入产品经理版本/进入解决方案版本"。'
+      },
+      {
+        title: '🔀 项目内容双视角重写（核心变更）',
+        description: '同一项目用两种思维方式重新解释。PM版按"业务问题→产品方案→用户旅程→Agent流程→数据反馈"结构展示，AI版按"业务问题→技术方案→系统架构→关键实现→交付结果"结构展示。AI页面避免技术简历化，不再堆砌技术栈Logo。'
+      },
+      {
+        title: '🎨 视觉色彩区分',
+        description: '产品经理入口保持蓝色渐变(from-blue-500 to-cyan-500)，AI解决方案工程师入口保持紫色渐变(from-purple-500 to-pink-500)，形成视觉锚点。'
+      },
+    ]
+  },
+  {
     date: '2026-08-12',
     content: [
       {
