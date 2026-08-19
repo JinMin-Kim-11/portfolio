@@ -1,4 +1,4 @@
-import { type ProjectItemType } from '@/config/projects'
+﻿import { type ProjectItemType } from '@/config/projects'
 
 export const headline = 'AI产品经理 | AI Agent × 产品设计 × 用户需求'
 export const introduction = '我关注如何把 AI 能力转化为真正解决用户问题的产品。从用户需求出发，完成产品方案设计、Agent 工作流规划、PRD 撰写与跨团队协作，推动 AI 产品从 0 到 1 落地并持续迭代。'
@@ -21,6 +21,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '海外客户咨询存在时差与人工响应效率不足的痛点。主导 AI 销售助手的产品方案设计，从用户需求分析到 Agent 对话流程设计、知识库内容规划与 Prompt 策略制定，推动产品从方案到上线全流程。',
     link: { href: 'https://www.wuxibiologics.com', label: '药明生物' },
+    logo: '/images/icon/wuxibiologics.ico',
     category: ['AI Agent'],
     techStack: ['AI Agent', 'RAG', 'Prompt Engineering', '知识库'],
     tags: ['用户需求分析', '产品方案', 'Agent工作流'],
@@ -39,6 +40,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '企业内部信息获取依赖多系统切换，效率低下。负责 AI 效率工具的产品方案设计，以企业微信为入口，设计自然语言查询流程，规划 Git 统计、开发数据查询、部门周报自动生成等功能，撰写 PRD 并协调研发落地。',
     link: { href: 'https://www.jingdigital.com', label: '径硕科技' },
+    logo: '/images/icon/jingdigital.ico',
     category: ['AI 工具'],
     techStack: ['OpenClaw', '企业微信', 'Kubernetes', 'Git', '数据库'],
     tags: ['内部效率', '产品设计', '功能规划'],
@@ -57,6 +59,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '海外 B2B 营销场景缺乏智能化工具支持。参与营销 SaaS 平台 AI Agent 产品建设，负责海外营销场景用户需求调研，参与 AI Agent 功能规划和产品流程设计，建立用户反馈分析机制推动产品迭代。',
     link: { href: 'https://www.inrepli.com/', label: 'inrepli' },
+    logo: '/images/icon/inrepli.png',
     category: ['SaaS 产品'],
     techStack: ['AI Agent', 'SaaS', '营销自动化'],
     tags: ['海外B2B', '需求调研', '产品规划'],
@@ -75,6 +78,7 @@ export const projects: Array<ProjectItemType> = [
     description:
       '在线教育场景下，学习平台需要支持多角色协作与完整学习闭环。独立完成产品设计与全栈开发，设计三角色权限体系，规划课程管理、题库考试、社区交流等功能模块。',
     link: { href: '#', label: '个人项目' },
+    logo: '/images/icon/python.ico',
     category: ['全栈开发'],
     techStack: ['Python', 'Flask', 'MySQL', 'HTML/CSS/JS', 'Bootstrap'],
     tags: ['独立开发', '产品设计', '全栈'],
