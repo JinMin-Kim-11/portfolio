@@ -26,7 +26,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['OpenClaw', '企业微信', 'Kubernetes', 'Git', '数据库'],
     tags: ['Agent开发', '系统集成', '企业交付'],
     role: 'AI 产品实习生',
-    date: '2025.11 - 2026.07',
+    date: '2026.03 - 2026.04',
     highlights: [
       '业务问题：内部员工获取开发数据需切换数据库、Git、K8s 等多个系统，效率低下且缺乏统一入口',
       '技术方案：基于 OpenClaw 平台开发企业微信 AI Agent，将自然语言转化为结构化查询，实现统一入口',
@@ -45,7 +45,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['AI Agent', 'RAG', 'Prompt Engineering', '知识库'],
     tags: ['RAG搭建', 'Agent工作流', 'AI交付'],
     role: 'AI 产品实习生',
-    date: '2025.11 - 2026.07',
+    date: '2025.11 - 2026.03',
     highlights: [
       '业务问题：海外客户咨询存在时差障碍，人工销售无法 7×24 小时响应，潜在客户流失',
       '技术方案：搭建 RAG 知识库检索系统 + 多轮对话 Agent 工作流，实现 7×24 小时自动应答',
@@ -64,7 +64,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['AI Agent', 'SaaS', '营销自动化'],
     tags: ['Agent开发', 'SaaS平台', '功能交付'],
     role: 'AI 产品实习生',
-    date: '2025.11 - 2026.07',
+    date: '2026.05 - 2026.07',
     highlights: [
       '业务问题：海外 B2B 营销人员缺乏智能化工具，邮件营销、客户画像分析等环节效率不足',
       '技术方案：参与邮件营销 Agent、客户画像分析 Agent、智能推荐模块的 Agent 工作流开发',
@@ -83,7 +83,7 @@ export const projects: Array<ProjectItemType> = [
     techStack: ['Python', 'Flask', 'MySQL', 'HTML/CSS/JS', 'Bootstrap'],
     tags: ['独立开发', '全栈', '系统设计'],
     role: '独立开发者',
-    date: '2024 - 2025',
+    date: '2025.09 - 2025.11',
     highlights: [
       '业务问题：在线学习平台需支持学生、教师、管理员三方协作，现有工具功能分散',
       '技术方案：基于 Flask 框架实现三角色权限系统，设计 RESTful API 与 MySQL 数据库架构',
