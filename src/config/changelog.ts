@@ -14,6 +14,19 @@ export type ChangelogItemType = {
 
 export const changelogList: Array<ChangelogItemType> = [
   {
+    date: '2026-08-22',
+    content: [
+      {
+        title: '📝 修复博客表格显示问题',
+        description: '将药明生物 SDR Agent 复盘博客中的 Markdown 表格替换为 HTML 表格，解决 remark-gfm 插件解析问题导致表格无法正常显示的问题。'
+      },
+      {
+        title: '✍️ 新增药明生物 Agent 复盘博客',
+        description: '发布《药明生物 SDR Agent 复盘：1000 次访问为何只产出 1 条线索》深度复盘文章，从流量意图、商业意图识别、留资时机、用户分层、漏斗数据五个维度分析转化问题。'
+      }
+    ]
+  },
+  {
     date: '2026-08-19',
     content: [
       {
