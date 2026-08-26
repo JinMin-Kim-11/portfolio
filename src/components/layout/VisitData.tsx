@@ -6,12 +6,16 @@ import { Eye } from '@phosphor-icons/react';
 type VisitStats = {
   totalUV: string;
   dailyUV: string;
+  totalPV: string;
+  dailyPV: string;
 }
 
 export default function VisitData() {
   const [stats, setStats] = useState<VisitStats>({
     totalUV: '-',
     dailyUV: '-',
+    totalPV: '-',
+    dailyPV: '-',
   });
 
   useEffect(() => {
@@ -34,7 +38,7 @@ export default function VisitData() {
   return (
     <div className="flex flex-row items-center justify-center gap-2 text-sm text-gray-500 mt-2">
       <Eye size={16} weight="duotone" />
-      总访问: {stats.totalUV} · 今日访问: {stats.dailyUV}
+      总访问 {stats.totalPV} · 今日访问 {stats.dailyPV} · 访客 {stats.totalUV}
     </div>
   );
 }

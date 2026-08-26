@@ -3,6 +3,7 @@ import { type Metadata } from 'next'
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/layout/Layout'
 import { Analytics } from "@/components/analytics/analytics";
+import { Tracker } from "@/components/analytics/Tracker";
 import { name, headline, introduction } from '@/config/infoConfig'
 import '@/styles/tailwind.css'
 
@@ -34,6 +35,7 @@ export default function RootLayout({
             <Layout>{children}</Layout>
           </div>
           <Analytics />
+          <Tracker />
         </Providers>
       </body>
     </html>
