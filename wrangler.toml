@@ -1,7 +1,9 @@
 name = "jinmin-portfolio"
-compatibility_date = "2024-09-01"
+compatibility_date = "2026-08-16"
+
+[env.production]
 
 [[d1_databases]]
 binding = "DB"
 database_name = "portfolio-analytics"
-database_id = "PLACEHOLDER_RUN_WRANGLER_D1_CREATE"
+database_id = "bf01ad10-11a3-44d8-8653-a767a13f97bc"
