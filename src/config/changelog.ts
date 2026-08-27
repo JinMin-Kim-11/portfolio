@@ -14,6 +14,19 @@ export type ChangelogItemType = {
 
 export const changelogList: Array<ChangelogItemType> = [
   {
+    date: '2026-08-28',
+    content: [
+      {
+        title: '📊 新增数据统计面板',
+        description: '上线自建访问追踪系统，基于 Cloudflare Pages Functions + D1 数据库实现。包含总 PV/UV、今日 PV/UV、近 7 天趋势图、热门页面 TOP10、点击事件 TOP10 等数据可视化。页面路径：/stats。'
+      },
+      {
+        title: '🔧 迁移到 Cloudflare 动态架构',
+        description: '从纯静态站点升级为 Cloudflare Pages + Functions + D1 动态架构，支持服务端 API 接口和数据库存储，为后续 AI 对话等功能打下基础。'
+      }
+    ]
+  },
+  {
     date: '2026-08-22',
     content: [
       {

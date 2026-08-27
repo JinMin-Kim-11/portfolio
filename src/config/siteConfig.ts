@@ -24,6 +24,7 @@ export function getFooterItems(prefix: string = ''): Array<NavItemType> {
     { name: '项目', href: `${prefix}/projects` },
     { name: '博客', href: `${prefix}/blogs` },
     { name: '更新日志', href: `${prefix}/changelog` },
+    { name: '数据统计', href: `${prefix}/stats` },
   ]
 }
 
