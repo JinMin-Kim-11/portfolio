@@ -24,6 +24,7 @@ type StatsData = {
   hourly: Array<{ hour: number; views: number; uv: number }>
   dwellTimes: Array<{ path: string; avg_dwell: number }>
   pathSequences: Array<{ visitorId: string; pages: string[]; count: number }>
+  excluded?: boolean
 }
 
 function StatCard({
@@ -275,7 +276,8 @@ export function StatsDashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('/api/stats', { cache: 'no-store' })
+      const vid = localStorage.getItem('vid') || ''
+      const res = await fetch(`/api/stats?exclude=${encodeURIComponent(vid)}`, { cache: 'no-store' })
       if (!res.ok) throw new Error('Failed to fetch')
       const json = await res.json()
       setData(json)
@@ -322,6 +324,13 @@ export function StatsDashboard() {
 
   return (
     <div className="space-y-8">
+      {data.excluded && (
+        <div className="flex items-center gap-2 rounded-lg bg-primary/5 px-4 py-2 text-xs text-muted-foreground ring-1 ring-primary/20">
+          <Repeat className="h-3.5 w-3.5 text-primary" />
+          <span>已自动排除你的访问记录，仅展示真实访客数据</span>
+        </div>
+      )}
+
       {/* Stat Cards */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard icon={Eye} label="总页面浏览" value={data.totalPV.toLocaleString()} subValue="累计 PV" accent="bg-blue-500" />
