@@ -23,10 +23,10 @@ export async function onRequestGet(context) {
       ? await env.DB.prepare('SELECT COUNT(DISTINCT visitor_id) as count FROM page_views WHERE date(created_at) = ? AND visitor_id != ?').bind(today, excludeVisitor).first()
       : await env.DB.prepare('SELECT COUNT(DISTINCT visitor_id) as count FROM page_views WHERE date(created_at) = ?').bind(today).first()
 
-    // --- 热门页面 ---
+    // --- 热门页面 (全部) ---
     const topPages = excludeVisitor
-      ? await env.DB.prepare('SELECT path, COUNT(*) as views FROM page_views WHERE visitor_id != ? GROUP BY path ORDER BY views DESC LIMIT 10').bind(excludeVisitor).all()
-      : await env.DB.prepare('SELECT path, COUNT(*) as views FROM page_views GROUP BY path ORDER BY views DESC LIMIT 10').all()
+      ? await env.DB.prepare('SELECT path, COUNT(*) as views FROM page_views WHERE visitor_id != ? GROUP BY path ORDER BY views DESC').bind(excludeVisitor).all()
+      : await env.DB.prepare('SELECT path, COUNT(*) as views FROM page_views GROUP BY path ORDER BY views DESC').all()
 
     // --- 点击事件 (全部) ---
     const topClicks = excludeVisitor
@@ -45,8 +45,8 @@ export async function onRequestGet(context) {
 
     // --- 来源分析 (referrer) ---
     const referrers = excludeVisitor
-      ? await env.DB.prepare(`SELECT CASE WHEN referrer IS NULL OR referrer = '' THEN '直接访问' WHEN referrer LIKE '%google%' THEN 'Google' WHEN referrer LIKE '%bing%' THEN 'Bing' WHEN referrer LIKE '%baidu%' THEN '百度' WHEN referrer LIKE '%github%' THEN 'GitHub' WHEN referrer LIKE '%weixin%' OR referrer LIKE '%微信%' THEN '微信' WHEN referrer LIKE '%linkedin%' THEN 'LinkedIn' WHEN referrer LIKE '%boss%' THEN 'BOSS直聘' WHEN referrer LIKE '%lagou%' THEN '拉勾' WHEN referrer LIKE '%zhihu%' THEN '知乎' WHEN referrer LIKE '%twitter%' OR referrer LIKE '%x.com%' THEN 'Twitter/X' ELSE substr(referrer, 1, instr(referrer || '/', '/') - 1) END as source, COUNT(*) as count FROM page_views WHERE visitor_id != ? GROUP BY source ORDER BY count DESC LIMIT 10`).bind(excludeVisitor).all()
-      : await env.DB.prepare(`SELECT CASE WHEN referrer IS NULL OR referrer = '' THEN '直接访问' WHEN referrer LIKE '%google%' THEN 'Google' WHEN referrer LIKE '%bing%' THEN 'Bing' WHEN referrer LIKE '%baidu%' THEN '百度' WHEN referrer LIKE '%github%' THEN 'GitHub' WHEN referrer LIKE '%weixin%' OR referrer LIKE '%微信%' THEN '微信' WHEN referrer LIKE '%linkedin%' THEN 'LinkedIn' WHEN referrer LIKE '%boss%' THEN 'BOSS直聘' WHEN referrer LIKE '%lagou%' THEN '拉勾' WHEN referrer LIKE '%zhihu%' THEN '知乎' WHEN referrer LIKE '%twitter%' OR referrer LIKE '%x.com%' THEN 'Twitter/X' ELSE substr(referrer, 1, instr(referrer || '/', '/') - 1) END as source, COUNT(*) as count FROM page_views GROUP BY source ORDER BY count DESC LIMIT 10`).all()
+      ? await env.DB.prepare(`SELECT CASE WHEN referrer IS NULL OR referrer = '' THEN '直接访问' WHEN referrer LIKE '%google%' THEN 'Google' WHEN referrer LIKE '%bing%' THEN 'Bing' WHEN referrer LIKE '%baidu%' THEN '百度' WHEN referrer LIKE '%github%' THEN 'GitHub' WHEN referrer LIKE '%weixin%' OR referrer LIKE '%微信%' THEN '微信' WHEN referrer LIKE '%linkedin%' THEN 'LinkedIn' WHEN referrer LIKE '%boss%' THEN 'BOSS直聘' WHEN referrer LIKE '%lagou%' THEN '拉勾' WHEN referrer LIKE '%zhihu%' THEN '知乎' WHEN referrer LIKE '%twitter%' OR referrer LIKE '%x.com%' THEN 'Twitter/X' ELSE substr(referrer, 1, instr(referrer || '/', '/') - 1) END as source, COUNT(*) as count FROM page_views WHERE visitor_id != ? GROUP BY source ORDER BY count DESC`).bind(excludeVisitor).all()
+      : await env.DB.prepare(`SELECT CASE WHEN referrer IS NULL OR referrer = '' THEN '直接访问' WHEN referrer LIKE '%google%' THEN 'Google' WHEN referrer LIKE '%bing%' THEN 'Bing' WHEN referrer LIKE '%baidu%' THEN '百度' WHEN referrer LIKE '%github%' THEN 'GitHub' WHEN referrer LIKE '%weixin%' OR referrer LIKE '%微信%' THEN '微信' WHEN referrer LIKE '%linkedin%' THEN 'LinkedIn' WHEN referrer LIKE '%boss%' THEN 'BOSS直聘' WHEN referrer LIKE '%lagou%' THEN '拉勾' WHEN referrer LIKE '%zhihu%' THEN '知乎' WHEN referrer LIKE '%twitter%' OR referrer LIKE '%x.com%' THEN 'Twitter/X' ELSE substr(referrer, 1, instr(referrer || '/', '/') - 1) END as source, COUNT(*) as count FROM page_views GROUP BY source ORDER BY count DESC`).all()
 
     // --- 设备/浏览器分析 (user_agent) ---
     const devices = excludeVisitor
@@ -86,15 +86,15 @@ export async function onRequestGet(context) {
       ? await env.DB.prepare(`SELECT cast(strftime('%H', created_at) as integer) as hour, COUNT(*) as views, COUNT(DISTINCT visitor_id) as uv FROM page_views WHERE visitor_id != ? GROUP BY hour ORDER BY hour ASC`).bind(excludeVisitor).all()
       : await env.DB.prepare(`SELECT cast(strftime('%H', created_at) as integer) as hour, COUNT(*) as views, COUNT(DISTINCT visitor_id) as uv FROM page_views GROUP BY hour ORDER BY hour ASC`).all()
 
-    // --- 页面停留时长估算 ---
+    // --- 页面停留时长估算 (全部) ---
     const dwellTimes = excludeVisitor
-      ? await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views WHERE visitor_id != ?) SELECT path, ROUND(AVG(CASE WHEN next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 THEN (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 ELSE 0 END), 1) as avg_dwell FROM ordered GROUP BY path ORDER BY avg_dwell DESC LIMIT 10`).bind(excludeVisitor).all()
-      : await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views) SELECT path, ROUND(AVG(CASE WHEN next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 THEN (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 ELSE 0 END), 1) as avg_dwell FROM ordered GROUP BY path ORDER BY avg_dwell DESC LIMIT 10`).all()
+      ? await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views WHERE visitor_id != ?) SELECT path, ROUND(AVG(CASE WHEN next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 THEN (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 ELSE 0 END), 1) as avg_dwell FROM ordered GROUP BY path ORDER BY avg_dwell DESC`).bind(excludeVisitor).all()
+      : await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views) SELECT path, ROUND(AVG(CASE WHEN next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 THEN (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 ELSE 0 END), 1) as avg_dwell FROM ordered GROUP BY path ORDER BY avg_dwell DESC`).all()
 
-    // --- 浏览路径 (最近 20 条路径) ---
+    // --- 浏览路径 (全部) ---
     const paths = excludeVisitor
-      ? await env.DB.prepare(`SELECT visitor_id, path, created_at FROM page_views WHERE visitor_id != ? ORDER BY created_at DESC LIMIT 200`).bind(excludeVisitor).all()
-      : await env.DB.prepare(`SELECT visitor_id, path, created_at FROM page_views ORDER BY created_at DESC LIMIT 200`).all()
+      ? await env.DB.prepare(`SELECT visitor_id, path, created_at FROM page_views WHERE visitor_id != ? ORDER BY created_at DESC`).bind(excludeVisitor).all()
+      : await env.DB.prepare(`SELECT visitor_id, path, created_at FROM page_views ORDER BY created_at DESC`).all()
 
     const visitorMap = {}
     for (const row of paths.results) {
@@ -109,7 +109,6 @@ export async function onRequestGet(context) {
     const pathSequences = Object.entries(visitorMap)
       .filter(([, v]) => v.length > 0)
       .sort((a, b) => b[1].length - a[1].length)
-      .slice(0, 10)
       .map(([id, visits]) => ({
         visitorId: id.slice(0, 8),
         pages: visits.map(v => v.path),

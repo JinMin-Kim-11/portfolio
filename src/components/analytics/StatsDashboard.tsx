@@ -452,8 +452,8 @@ export function StatsDashboard() {
 
       {/* Top Lists */}
       <div className="grid gap-4 md:grid-cols-2">
-        <TopList title="热门页面 TOP 10" icon={Eye} items={data.topPages} valueLabel="次浏览" pathKey="path" countKey="views" />
-        <TopList title="点击事件 TOP 10" icon={MousePointerClick} items={data.topClicks} valueLabel="次点击" pathKey="event_name" countKey="clicks" />
+        <TopList title="热门页面" icon={Eye} items={data.topPages} valueLabel="次浏览" pathKey="path" countKey="views" />
+        <TopList title="点击事件" icon={MousePointerClick} items={data.topClicks} valueLabel="次点击" pathKey="event_name" countKey="clicks" />
       </div>
 
       {/* Click Events Detail */}
@@ -509,7 +509,7 @@ export function StatsDashboard() {
 
       {/* Path Sequences */}
       <div className="rounded-2xl bg-card p-6 ring-1 ring-muted shadow-sm">
-        <div className="flex items-center gap-2 mb-4"><Route className="h-5 w-5 text-primary" /><h3 className="font-semibold">用户浏览路径 (近 20 条)</h3></div>
+        <div className="flex items-center gap-2 mb-4"><Route className="h-5 w-5 text-primary" /><h3 className="font-semibold">用户浏览路径 (全部)</h3></div>
         <PathSequences data={data.pathSequences} />
       </div>
     </div>
