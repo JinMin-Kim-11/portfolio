@@ -6,7 +6,7 @@ export function BlogCard({ blog, titleAs, basePath = '' }: { blog: BlogType, tit
   const as = titleAs ?? 'h2'
   return (
     <Card as="article">
-      <Card.Title as={as} href={`${basePath}/blogs/${blog.slug}`}>
+      <Card.Title as={as} href={`${basePath}/blogs/${blog.slug}`} data-track="blog_card_click" data-track-data={blog.slug}>
         {blog.title}
       </Card.Title>
       <Card.Eyebrow as="time" dateTime={blog.date} decorate>

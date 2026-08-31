@@ -44,6 +44,7 @@ export default function Feed() {
             variant="ghost"
             onClick={handleCopy}
             className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+            data-track="feed_copy"
           >
             {copied ? (
               <Check className="h-4 w-4 text-primary" />
@@ -58,6 +59,7 @@ export default function Feed() {
         <Button 
           onClick={() => window.open(feedUrl, '_blank')} 
           className="hidden md:block flex-none bg-primary text-primary-foreground"
+          data-track="feed_subscribe"
         >
           订阅
         </Button>

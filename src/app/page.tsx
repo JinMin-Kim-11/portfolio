@@ -49,6 +49,7 @@ export default function Home() {
               key={version.href}
               href={version.href}
               className="group relative overflow-hidden rounded-2xl border border-muted-foreground/20 bg-card p-8 shadow-sm transition-all hover:scale-[1.02] hover:shadow-lg"
+              data-track={`home_version_${version.href.slice(1)}`}
             >
               <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${version.accent}`} />
               <div className="mb-4">

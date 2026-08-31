@@ -24,6 +24,7 @@ type StatsData = {
   hourly: Array<{ hour: number; views: number; uv: number }>
   dwellTimes: Array<{ path: string; avg_dwell: number }>
   pathSequences: Array<{ visitorId: string; pages: string[]; count: number }>
+  clickDetails: Array<{ event_name: string; event_data: string | null; count: number }>
   excluded?: boolean
 }
 
@@ -269,6 +270,86 @@ function PathSequences({ data }: { data: Array<{ visitorId: string; pages: strin
   )
 }
 
+const clickCategories: Record<string, { label: string; prefix: string; icon: string }> = {
+  nav: { label: '导航交互', prefix: 'nav_', icon: '🧭' },
+  home: { label: '首页操作', prefix: 'home_', icon: '🏠' },
+  social: { label: '社交/联系', prefix: 'social_', icon: '💬' },
+  contact: { label: '联系方式', prefix: 'contact_', icon: '📞' },
+  project: { label: '项目交互', prefix: 'project_', icon: '📦' },
+  github: { label: 'GitHub 项目', prefix: 'github_', icon: '🐙' },
+  friend: { label: '友链点击', prefix: 'friend_', icon: '🤝' },
+  blog: { label: '博客交互', prefix: 'blog_', icon: '📝' },
+  feed: { label: '订阅操作', prefix: 'feed_', icon: '📡' },
+  newsletter: { label: '邮件订阅', prefix: 'newsletter_', icon: '✉️' },
+  tweet: { label: '推文互动', prefix: 'tweet_', icon: '🐦' },
+  theme: { label: '主题切换', prefix: 'theme_', icon: '🌓' },
+  footer: { label: '页脚导航', prefix: 'footer_', icon: '📄' },
+  other: { label: '其他', prefix: '', icon: '⚙️' },
+}
+
+function ClickCategorySection({ details }: { details: Array<{ event_name: string; event_data: string | null; count: number }> }) {
+  if (!details.length) {
+    return (
+      <div className="rounded-2xl bg-card p-6 ring-1 ring-muted shadow-sm">
+        <div className="flex items-center gap-2 mb-4"><MousePointerClick className="h-5 w-5 text-primary" /><h3 className="font-semibold">点击事件明细</h3></div>
+        <p className="text-sm text-muted-foreground">暂无数据</p>
+      </div>
+    )
+  }
+
+  const categorized: Record<string, Array<typeof details[0]>> = {}
+  for (const d of details) {
+    let cat = 'other'
+    for (const [key, cfg] of Object.entries(clickCategories)) {
+      if (key === 'other') continue
+      if (d.event_name.startsWith(cfg.prefix)) { cat = key; break }
+    }
+    if (!categorized[cat]) categorized[cat] = []
+    categorized[cat].push(d)
+  }
+
+  const maxCount = Math.max(...details.map((d) => d.count), 1)
+
+  return (
+    <div className="rounded-2xl bg-card p-6 ring-1 ring-muted shadow-sm">
+      <div className="flex items-center gap-2 mb-4">
+        <MousePointerClick className="h-5 w-5 text-primary" />
+        <h3 className="font-semibold">点击事件明细 ({details.length} 种事件)</h3>
+      </div>
+      <div className="space-y-6">
+        {Object.entries(clickCategories).map(([key, cfg]) => {
+          const items = categorized[key]
+          if (!items || !items.length) return null
+          return (
+            <div key={key}>
+              <p className="mb-2 text-xs font-medium text-muted-foreground">{cfg.icon} {cfg.label}</p>
+              <div className="space-y-2">
+                {items.map((item, i) => {
+                  const percent = (item.count / maxCount) * 100
+                  return (
+                    <div key={i} className="space-y-1">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="truncate font-medium max-w-[60%]">
+                          {item.event_name}
+                          {item.event_data && <span className="ml-2 text-xs text-muted-foreground">[{item.event_data}]</span>}
+                        </span>
+                        <span className="text-muted-foreground tabular-nums">{item.count} 次</span>
+                      </div>
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                        <div className="h-full rounded-full bg-primary/60" style={{ width: `${percent}%` }} />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export function StatsDashboard() {
   const [data, setData] = useState<StatsData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -374,6 +455,9 @@ export function StatsDashboard() {
         <TopList title="热门页面 TOP 10" icon={Eye} items={data.topPages} valueLabel="次浏览" pathKey="path" countKey="views" />
         <TopList title="点击事件 TOP 10" icon={MousePointerClick} items={data.topClicks} valueLabel="次点击" pathKey="event_name" countKey="clicks" />
       </div>
+
+      {/* Click Events Detail */}
+      <ClickCategorySection details={data.clickDetails} />
 
       {/* Source & Version */}
       <div className="grid gap-4 md:grid-cols-2">

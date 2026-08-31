@@ -9,7 +9,7 @@ function Blog({ blog, basePath }: { blog: BlogType, basePath: string }) {
   return (
     <article className="md:grid md:grid-cols-4 md:items-baseline">
       <Card className="md:col-span-3">
-        <Card.Title href={`${basePath}/blogs/${blog.slug}`}>
+        <Card.Title href={`${basePath}/blogs/${blog.slug}`} data-track="blog_list_click" data-track-data={blog.slug}>
           {blog.title}
         </Card.Title>
         <Card.Eyebrow

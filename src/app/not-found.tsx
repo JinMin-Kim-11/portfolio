@@ -14,7 +14,7 @@ export default function NotFound() {
         <p className="mt-4 text-base text-zinc-600 dark:text-zinc-400">
           抱歉，我们无法找到您要访问的页面。
         </p>
-        <Button href="/" variant="secondary" className="mt-4">
+        <Button href="/" variant="secondary" className="mt-4" data-track="404_back_home">
           返回首页
         </Button>
       </div>

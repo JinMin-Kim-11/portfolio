@@ -55,6 +55,7 @@ export function ProjectModal({
                 onClick={onClose}
                 className="absolute top-4 right-4 rounded-lg p-1.5 text-muted-foreground transition hover:bg-muted hover:text-foreground"
                 aria-label="关闭"
+                data-track="project_modal_close"
               >
                 <X size={20} weight="bold" />
               </button>
@@ -154,6 +155,8 @@ export function ProjectModal({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-lg bg-teal-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-teal-600"
+                      data-track="project_visit_link"
+                      data-track-data={project.name}
                     >
                       访问 {project.link.label}
                       <ArrowUpRight size={16} weight="bold" />

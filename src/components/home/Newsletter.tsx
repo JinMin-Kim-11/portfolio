@@ -27,7 +27,7 @@ export default function Newsletter() {
             required
             className="min-w-0 flex-auto appearance-none rounded-md focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 sm:text-sm"
           />
-          <Button type="submit" className="ml-4 flex-none bg-primary text-primary-foreground dark:bg-primary-foreground dark:text-primary">
+          <Button type="submit" className="ml-4 flex-none bg-primary text-primary-foreground dark:bg-primary-foreground dark:text-primary" data-track="newsletter_submit">
             Join
           </Button>
         </div>

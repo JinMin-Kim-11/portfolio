@@ -17,6 +17,8 @@ export function ProjectCard({ project, titleAs }: { project: ProjectItemType, ti
         <button
           onClick={() => setIsOpen(true)}
           className="relative flex flex-col justify-between h-full w-full p-4 rounded-2xl border border-muted-foreground/20 shadow-sm transition-all group-hover:scale-[1.03] group-hover:shadow-md group-hover:bg-muted/5 text-left cursor-pointer"
+          data-track="project_card_open"
+          data-track-data={project.name}
         >
           <div className=''>
             <div className='flex flex-col sm:flex-row justify-center sm:justify-start items-start sm:items-center gap-4'>

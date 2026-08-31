@@ -28,10 +28,15 @@ export async function onRequestGet(context) {
       ? await env.DB.prepare('SELECT path, COUNT(*) as views FROM page_views WHERE visitor_id != ? GROUP BY path ORDER BY views DESC LIMIT 10').bind(excludeVisitor).all()
       : await env.DB.prepare('SELECT path, COUNT(*) as views FROM page_views GROUP BY path ORDER BY views DESC LIMIT 10').all()
 
-    // --- 点击事件 ---
+    // --- 点击事件 (全部) ---
     const topClicks = excludeVisitor
-      ? await env.DB.prepare('SELECT event_name, COUNT(*) as clicks FROM click_events WHERE visitor_id != ? GROUP BY event_name ORDER BY clicks DESC LIMIT 10').bind(excludeVisitor).all()
-      : await env.DB.prepare('SELECT event_name, COUNT(*) as clicks FROM click_events GROUP BY event_name ORDER BY clicks DESC LIMIT 10').all()
+      ? await env.DB.prepare('SELECT event_name, COUNT(*) as clicks FROM click_events WHERE visitor_id != ? GROUP BY event_name ORDER BY clicks DESC').bind(excludeVisitor).all()
+      : await env.DB.prepare('SELECT event_name, COUNT(*) as clicks FROM click_events GROUP BY event_name ORDER BY clicks DESC').all()
+
+    // --- 点击事件明细 (含 event_data) ---
+    const clickDetails = excludeVisitor
+      ? await env.DB.prepare("SELECT event_name, event_data, COUNT(*) as count FROM click_events WHERE visitor_id != ? GROUP BY event_name, event_data ORDER BY count DESC").bind(excludeVisitor).all()
+      : await env.DB.prepare("SELECT event_name, event_data, COUNT(*) as count FROM click_events GROUP BY event_name, event_data ORDER BY count DESC").all()
 
     // --- 7 天趋势 ---
     const last7Days = excludeVisitor
@@ -118,6 +123,7 @@ export async function onRequestGet(context) {
       dailyUV: dailyUV.count,
       topPages: topPages.results,
       topClicks: topClicks.results,
+      clickDetails: clickDetails.results,
       last7Days: last7Days.results,
       referrers: referrers.results,
       devices: devices.results,

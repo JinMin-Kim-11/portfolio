@@ -32,7 +32,10 @@ export function FriendCard({ friend, titleAs }: { friend: FriendItemType, titleA
           href={utmLink}
           target='_blank'
           rel='noopener noreferrer nofollow'
-          className='h-full w-full absolute'>
+          className='h-full w-full absolute'
+          data-track="friend_card_visit"
+          data-track-data={friend.name}
+        >
           <ArrowUpRight size={32} weight="duotone" className="absolute top-2 right-8 h-4 w-4 group-hover:text-primary" />
         </Link>
       </div>

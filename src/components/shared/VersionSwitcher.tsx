@@ -29,7 +29,7 @@ export function VersionSwitcher() {
 
   return (
     <Popover className="relative">
-      <Popover.Button className="flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium shadow-sm ring-1 ring-muted backdrop-blur bg-card transition hover:ring-primary/40">
+      <Popover.Button className="flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium shadow-sm ring-1 ring-muted backdrop-blur bg-card transition hover:ring-primary/40" data-track="nav_version_switch">
         {currentVersion?.short}
         <ChevronDownIcon className="h-3 w-3" />
       </Popover.Button>
@@ -58,6 +58,8 @@ export function VersionSwitcher() {
               key={version.prefix}
               href={getSwitchHref(version.prefix)}
               className="block rounded-lg px-2 py-1.5 text-sm transition hover:bg-muted"
+              data-track="nav_version_change"
+              data-track-data={version.short}
             >
               {version.label}
             </Link>

@@ -115,7 +115,7 @@ export default async function VersionHome({
             {blogList.map((blog: BlogType) => (
               <BlogCard key={blog.slug} blog={blog} titleAs='h3' basePath={basePath}/>
             ))}
-            <Link href={`${basePath}/blogs`} className="flex flex-row items-center text-sm text-primary hover:underline capitalize font-semibold">阅读更多博客
+            <Link href={`${basePath}/blogs`} className="flex flex-row items-center text-sm text-primary hover:underline capitalize font-semibold" data-track="home_read_more_blogs">阅读更多博客
               <ChevronRightIcon className="ml-1 h-4 w-4 stroke-current" />
             </Link>
           </div>

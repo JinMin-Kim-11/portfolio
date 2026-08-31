@@ -102,7 +102,7 @@ export const TweetNotFound = ({
 export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
   <div className="flex flex-row justify-between tracking-tight">
     <div className="flex items-center space-x-2">
-      <a href={tweet.user.url} target="_blank" rel="noreferrer">
+      <a href={tweet.user.url} target="_blank" rel="noreferrer" data-track="tweet_profile">
         <img
           title={`Profile picture of ${tweet.user.name}`}
           alt={tweet.user.screen_name}
@@ -118,6 +118,7 @@ export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
           target="_blank"
           rel="noreferrer"
           className="flex items-center whitespace-nowrap font-semibold"
+          data-track="tweet_profile"
         >
           {truncate(tweet.user.name, 20)}
           {tweet.user.verified ||
@@ -131,13 +132,14 @@ export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
             target="_blank"
             rel="noreferrer"
             className="text-sm text-gray-500 transition-all duration-75"
+            data-track="tweet_profile"
           >
             @{truncate(tweet.user.screen_name, 16)}
           </a>
         </div>
       </div>
     </div>
-    <a href={tweet.url} target="_blank" rel="noreferrer">
+    <a href={tweet.url} target="_blank" rel="noreferrer" data-track="tweet_link">
       <span className="sr-only">Link to tweet</span>
       <Twitter className="size-5 items-start text-[#3BA9EE] transition-all ease-in-out hover:scale-105" />
     </a>

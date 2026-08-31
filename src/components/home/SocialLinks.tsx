@@ -29,6 +29,7 @@ export default function SocialLinks({ className }: { className?: string }) {
                                 onClick={handleWechatClick}
                                 aria-label={`微信号：${wechatId}`}
                                 className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground transition"
+                                data-track="social_wechat_copy"
                             >
                                 <CustomIcon name={link.icon} />
                                 <span className="sr-only">{link.name}</span>
@@ -42,14 +43,16 @@ export default function SocialLinks({ className }: { className?: string }) {
                     )
                 }
                 return (
-                    <Link
-                        key={link.name}
-                        href={link.external ? `${link.href}?utm_source=${utm_source}` : link.href}
-                        target={link.external ? "_blank" : "_self"}
-                        rel="noreferrer"
-                        aria-label={link.ariaLabel ?? `Follow on ${link.name}`}
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
-                    >
+                        <Link
+                            key={link.name}
+                            href={link.external ? `${link.href}?utm_source=${utm_source}` : link.href}
+                            target={link.external ? "_blank" : "_self"}
+                            rel="noreferrer"
+                            aria-label={link.ariaLabel ?? `Follow on ${link.name}`}
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+                            data-track="social_link"
+                            data-track-data={link.name}
+                        >
                         <CustomIcon name={link.icon} />
                         <span className="sr-only">{link.name}</span>
                     </Link>

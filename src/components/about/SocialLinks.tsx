@@ -18,6 +18,8 @@ export default function SocialLinks() {
             rel="noreferrer"
             aria-label={link.ariaLabel ?? `Follow on ${link.name}`}
             className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+            data-track="social_link"
+            data-track-data={link.name}
           >
             <CustomIcon name={link.icon} />
             <span className="sr-only">{link.name}</span>
@@ -28,6 +30,7 @@ export default function SocialLinks() {
         <Link
           href={`tel:${phone}`}
           className="group flex flex-row ml-3 justify-start items-center text-md font-medium transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+          data-track="contact_phone"
         >
           <Phone size={22} weight="duotone" />
           <span className="ml-4">{phone}</span>
@@ -41,6 +44,7 @@ export default function SocialLinks() {
         <Link
           href={`mailto:${email}`}
           className="group flex flex-row ml-3 justify-start items-center text-md font-medium transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+          data-track="contact_email"
         >
           <Envelope size={22} weight="duotone" />
           <span className="ml-4">{email}</span>
@@ -48,6 +52,7 @@ export default function SocialLinks() {
         <Link
           href={`mailto:${gmail}`}
           className="group flex flex-row ml-3 justify-start items-center text-md font-medium transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+          data-track="contact_gmail"
         >
           <Envelope size={22} weight="duotone" />
           <span className="ml-4">{gmail}</span>

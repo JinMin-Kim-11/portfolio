@@ -27,7 +27,7 @@ function MobileNavItem({
 }) {
   return (
     <li>
-      <Popover.Button as={Link} href={href} className="block py-2">
+      <Popover.Button as={Link} href={href} className="block py-2" data-track="nav_mobile_item" data-track-data={href}>
         {children}
       </Popover.Button>
     </li>
@@ -42,7 +42,7 @@ function MobileNavigation({
 }) {
   return (
     <Popover {...props}>
-      <Popover.Button className="group flex items-center rounded-full px-4 py-2 text-sm font-medium shadow-lg ring-1 ring-muted backdrop-blur ">
+      <Popover.Button className="group flex items-center rounded-full px-4 py-2 text-sm font-medium shadow-lg ring-1 ring-muted backdrop-blur " data-track="nav_menu_toggle">
         菜单
         <ChevronDownIcon className="ml-3 h-auto w-2" />
       </Popover.Button>
@@ -72,7 +72,7 @@ function MobileNavigation({
             className="fixed inset-x-4 top-8 z-50 origin-top rounded-3xl p-8 ring-1 ring-muted bg-card"
           >
             <div className="flex flex-row-reverse items-center justify-between">
-              <Popover.Button aria-label="关闭菜单" className="-m-1 p-1">
+              <Popover.Button aria-label="关闭菜单" className="-m-1 p-1" data-track="nav_menu_close">
                 <XIcon className="h-6 w-6 text-muted-foreground" />
               </Popover.Button>
               <h2 className="text-sm font-medium text-muted-foreground">
@@ -106,6 +106,8 @@ function NavItem({
     <li>
       <Link
         href={href}
+        data-track="nav_desktop_item"
+        data-track-data={href}
         className={clsx(
           'relative block px-3 py-2 transition',
           isActive
@@ -173,10 +175,11 @@ function AvatarContainer({
       />
       {showName && (
         <Link
-          href={homeHref}
-          aria-label="首页"
-          className='pointer-events-auto'
-        >
+      href={homeHref}
+      aria-label="首页"
+      className='pointer-events-auto'
+      data-track="nav_name_home"
+    >
           <div className="text-md font-semibold capitalize">{name}</div>
         </Link>
       )}
@@ -197,6 +200,7 @@ function Avatar({
       href={homeHref}
       aria-label="首页"
       className={clsx(className, 'pointer-events-auto')}
+      data-track="nav_avatar_home"
       {...props}
     >
       <Image

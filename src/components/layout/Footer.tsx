@@ -19,6 +19,8 @@ function NavLink({
     <Link
       href={href}
       className="transition hover:text-primary"
+      data-track="footer_nav"
+      data-track-data={href}
     >
       {children}
     </Link>
