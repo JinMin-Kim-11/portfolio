@@ -88,8 +88,8 @@ export async function onRequestGet(context) {
 
     // --- 页面停留时长估算 (全部) ---
     const dwellTimes = excludeVisitor
-      ? await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views WHERE visitor_id != ?) SELECT path, ROUND(AVG(CASE WHEN next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 THEN (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 ELSE 0 END), 1) as avg_dwell FROM ordered GROUP BY path ORDER BY avg_dwell DESC`).bind(excludeVisitor).all()
-      : await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views) SELECT path, ROUND(AVG(CASE WHEN next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 THEN (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 ELSE 0 END), 1) as avg_dwell FROM ordered GROUP BY path ORDER BY avg_dwell DESC`).all()
+      ? await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views WHERE visitor_id != ?) SELECT path, ROUND(AVG((julianday(next_at) - julianday(created_at)) * 24 * 60 * 60), 1) as avg_dwell, COUNT(*) as samples FROM ordered WHERE next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 GROUP BY path ORDER BY avg_dwell DESC`).bind(excludeVisitor).all()
+      : await env.DB.prepare(`WITH ordered AS (SELECT visitor_id, path, created_at, LEAD(created_at) OVER (PARTITION BY visitor_id ORDER BY created_at) as next_at FROM page_views) SELECT path, ROUND(AVG((julianday(next_at) - julianday(created_at)) * 24 * 60 * 60), 1) as avg_dwell, COUNT(*) as samples FROM ordered WHERE next_at IS NOT NULL AND (julianday(next_at) - julianday(created_at)) * 24 * 60 * 60 < 1800 GROUP BY path ORDER BY avg_dwell DESC`).all()
 
     // --- 浏览路径 (全部) ---
     const paths = excludeVisitor

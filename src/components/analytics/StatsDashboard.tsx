@@ -22,7 +22,7 @@ type StatsData = {
   returnRate: number
   returningVisitors: number
   hourly: Array<{ hour: number; views: number; uv: number }>
-  dwellTimes: Array<{ path: string; avg_dwell: number }>
+  dwellTimes: Array<{ path: string; avg_dwell: number; samples: number }>
   pathSequences: Array<{ visitorId: string; pages: string[]; count: number }>
   clickDetails: Array<{ event_name: string; event_data: string | null; count: number }>
   excluded?: boolean
@@ -435,7 +435,7 @@ export function StatsDashboard() {
           data.dwellTimes.length > 0
             ? `${Math.round(data.dwellTimes.reduce((s, d) => s + d.avg_dwell, 0) / data.dwellTimes.length)}s`
             : '—'
-        } subValue="页面停留估算" accent="bg-teal-500" />
+        } subValue={`${data.dwellTimes.reduce((s, d) => s + d.samples, 0)} 次跳转采样`} accent="bg-teal-500" />
       </div>
 
       {/* Trend Chart */}
@@ -485,7 +485,7 @@ export function StatsDashboard() {
       <div className="rounded-2xl bg-card p-6 ring-1 ring-muted shadow-sm">
         <div className="flex items-center gap-2 mb-4"><Clock className="h-5 w-5 text-primary" /><h3 className="font-semibold">页面停留时长 (估算)</h3></div>
         {data.dwellTimes.length === 0 ? (
-          <p className="text-sm text-muted-foreground">暂无数据</p>
+          <p className="text-sm text-muted-foreground">暂无数据（需要访客浏览多个页面才能计算停留时长）</p>
         ) : (
           <div className="space-y-3">
             {data.dwellTimes.map((d, i) => {
@@ -494,8 +494,8 @@ export function StatsDashboard() {
               return (
                 <div key={i} className="space-y-1">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="truncate font-medium max-w-[70%]">{d.path}</span>
-                    <span className="text-muted-foreground tabular-nums">{d.avg_dwell}s</span>
+                    <span className="truncate font-medium max-w-[60%]">{d.path}</span>
+                    <span className="text-muted-foreground tabular-nums">{d.avg_dwell}s <span className="text-xs">({d.samples} 次采样)</span></span>
                   </div>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
                     <div className="h-full rounded-full bg-primary/60" style={{ width: `${percent}%` }} />
