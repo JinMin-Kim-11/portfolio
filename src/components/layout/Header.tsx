@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { Fragment, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
@@ -9,11 +9,10 @@ import clsx from 'clsx'
 
 import { Container } from '@/components/layout/Container'
 import avatarImage from '@/images/avatar.jpg'
-import { getNavItems, getVersionPrefix } from '@/config/siteConfig'
+
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 import { GithubRepo } from '@/components/shared/GithubRepo'
-import { VersionSwitcher } from '@/components/shared/VersionSwitcher'
-import { name } from '@/config/infoConfig'
+import { name, navItems } from '@/config/infoConfig'
 import { ChevronDownIcon, XIcon } from 'lucide-react'
 
 import TypingAnimation from "@/components/ui/typing-animation";
@@ -163,7 +162,7 @@ function AvatarContainer({
 }: React.ComponentPropsWithoutRef<'div'> & {
   showName?: boolean
 }) {
-  const homeHref = getVersionPrefix(usePathname()) || '/'
+  const homeHref = '/'
   return (
     <div className='flex flex-row items-center gap-2'>
       <div
@@ -194,7 +193,7 @@ function Avatar({
 }: Omit<React.ComponentPropsWithoutRef<typeof Link>, 'href'> & {
   large?: boolean
 }) {
-  const homeHref = getVersionPrefix(usePathname()) || '/'
+  const homeHref = '/'
   return (
     <Link
       href={homeHref}
@@ -219,10 +218,8 @@ function Avatar({
 
 export function Header() {
   let pathname = usePathname()
-  let versionPrefix = getVersionPrefix(pathname)
-  let isHomePage = pathname === '/' || pathname === '/pm' || pathname === '/ai'
-  let currentNavItems = getNavItems(versionPrefix)
-  let homeHref = versionPrefix || '/'
+  let isHomePage = pathname === '/'
+  let currentNavItems = navItems
 
   let headerRef = useRef<React.ElementRef<'div'>>(null)
   let avatarRef = useRef<React.ElementRef<'div'>>(null)
@@ -429,7 +426,6 @@ export function Header() {
               </div>
               <div className="flex justify-end md:flex-1">
                 <div className="pointer-events-auto flex flex-row items-center gap-2 md:mr-2">
-                  <VersionSwitcher />
                   <ThemeToggle />
                   <GithubRepo />
                 </div>

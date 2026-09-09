@@ -1,4 +1,4 @@
-import { type Metadata } from 'next'
+﻿import { type Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
@@ -14,7 +14,7 @@ import SocialLinks from '@/components/about/SocialLinks'
 export const metadata: Metadata = {
   title: '关于',
   description:
-    '金旻 - AI Agent 产品设计师 | 软件工程背景 × 企业 AI 应用落地',
+    '金旻 - AI Product Manager | AI Agent 产品设计与技术落地',
 }
 
 export default function About() {
