@@ -14,6 +14,27 @@ export type ChangelogItemType = {
 
 export const changelogList: Array<ChangelogItemType> = [
   {
+    date: '2026-09-10',
+    content: [
+      {
+        title: '🎯 聚焦 AI 产品经理求职定位',
+        description: '将首页从"双版本选择"重构为 AI Product Manager 单版本叙事，突出业务需求 → AI 产品方案 → Agent Workflow → 产品落地的完整链路。移除顶部版本切换器，统一为单版本导航。'
+      },
+      {
+        title: '📋 三个核心项目 Case Study 化',
+        description: '药明生物 Pre-sales Agent、OpenClaw、Inrepli 三个项目升级为 AI PM Case Study 格式，每个项目包含 Business Background、Problem、Solution、Product Decisions、Agent Workflow、My Role、Validation、Results 八个模块。'
+      },
+      {
+        title: '🏠 首页直接展示精选项目',
+        description: '首页新增 Selected AI Product Projects 区域，三个核心项目以卡片形式直接呈现业务场景、我的工作和关键词，点击即可查看完整 Case Study。'
+      },
+      {
+        title: '👤 About 页面重写',
+        description: '围绕 AI 产品经理身份重写自我介绍，强调"从业务问题出发"的产品思维，技术背景定位为差异化优势而非主角。'
+      }
+    ]
+  },
+  {
     date: '2026-08-28',
     content: [
       {
