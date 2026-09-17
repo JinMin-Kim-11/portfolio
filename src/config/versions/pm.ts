@@ -18,6 +18,7 @@ export const projectIntro = "从企业销售 Agent 到内部 AI 效率工具，�
 export const projects: Array<ProjectItemType> = [
   {
     name: '药明生物官网智能获客 SDR Agent',
+    slug: 'wuxibiologics-sdr-agent',
     description:
       '海外客户咨询存在时差与人工响应效率不足的痛点。主导 AI 销售助手的产品方案设计，从用户需求分析到 Agent 对话流程设计、知识库内容规划与 Prompt 策略制定，推动产品从方案到上线全流程。',
     link: { href: 'https://www.wuxibiologics.com', label: '药明生物' },
@@ -37,6 +38,7 @@ export const projects: Array<ProjectItemType> = [
   },
   {
     name: 'OpenClaw 企业内部 AI 效率工具',
+    slug: 'openclaw-ai-agent',
     description:
       '企业内部信息获取依赖多系统切换，效率低下。负责 AI 效率工具的产品方案设计，以企业微信为入口，设计自然语言查询流程，规划 Git 统计、开发数据查询、部门周报自动生成等功能，撰写 PRD 并协调研发落地。',
     link: { href: 'https://www.jingdigital.com', label: '径硕科技' },
@@ -56,6 +58,7 @@ export const projects: Array<ProjectItemType> = [
   },
   {
     name: '海外 inrepli 营销 Agent 平台',
+    slug: 'inrepli-ai-saas',
     description:
       '海外 B2B 营销场景缺乏智能化工具支持。参与营销 SaaS 平台 AI Agent 产品建设，负责海外营销场景用户需求调研，参与 AI Agent 功能规划和产品流程设计，建立用户反馈分析机制推动产品迭代。',
     link: { href: 'https://www.inrepli.com/', label: 'inrepli' },

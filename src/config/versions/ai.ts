@@ -18,6 +18,7 @@ export const projectIntro = "从 RAG 知识库搭建到企业系统集成，再�
 export const projects: Array<ProjectItemType> = [
   {
     name: 'OpenClaw 企业内部 AI 效率工具',
+    slug: 'openclaw-ai-agent',
     description:
       '企业内部信息获取依赖多系统切换，缺乏统一入口。负责 AI 工具的 Agent 开发与系统集成，通过企业微信接入 AI 能力，实现数据库、Git、K8s 等多数据源的自然语言查询，完成 Git 提交统计、部门周报自动生成等 AI 自动化功能开发。',
     link: { href: 'https://www.jingdigital.com', label: '径硕科技' },
@@ -37,6 +38,7 @@ export const projects: Array<ProjectItemType> = [
   },
   {
     name: '药明生物官网智能获客 SDR Agent',
+    slug: 'wuxibiologics-sdr-agent',
     description:
       '海外客户咨询存在时差障碍，人工团队无法全天候响应。负责 AI 销售助手的 RAG 知识库搭建与 Prompt 工程，构建知识库检索系统，设计多轮对话 Prompt 模板，实现意图识别、知识检索、话术生成与人工转接的 Agent 工作流。',
     link: { href: 'https://www.wuxibiologics.com', label: '药明生物' },
@@ -56,6 +58,7 @@ export const projects: Array<ProjectItemType> = [
   },
   {
     name: '海外 inrepli 营销 Agent 平台',
+    slug: 'inrepli-ai-saas',
     description:
       '海外 B2B 营销场景缺乏智能化工具支持。参与营销 SaaS 平台 AI Agent 功能开发，分析海外营销场景技术需求，参与 Agent 功能实现与产品流程优化，协助分析用户交互数据为技术迭代提供方向。',
     link: { href: 'https://www.inrepli.com/', label: 'inrepli' },

@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 export const dynamic = 'force-static';
 import { site_url } from "@/config/siteConfig";
 import { getAllBlogs } from '@/lib/blogs'
+import { projects } from '@/config/projects'
 
 /**
  * Google's limit is 50,000 URLs per sitemap
@@ -60,6 +61,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${site_url}/blogs/${blog.slug}`,
       lastModified: new Date(blog.date).toISOString(),
     });
+  }
+
+  // Project detail pages
+  for (const project of projects) {
+    if (project.slug) {
+      sitemapList.push({
+        url: `${site_url}/projects/${project.slug}`,
+        lastModified: new Date().toISOString(),
+      });
+    }
   }
 
 	console.log("sitemap end, size:", sitemapList.length);

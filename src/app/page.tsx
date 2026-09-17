@@ -1,18 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { Container } from '@/components/layout/Container'
 import SocialLinks from '@/components/home/SocialLinks'
 import { projects } from '@/config/infoConfig'
-import { ProjectItemType } from '@/config/infoConfig'
-import { ProjectModal } from '@/components/project/ProjectModal'
 import { Favicon } from 'favicon-stealer'
+import Link from 'next/link'
 import { ArrowRight, MapPin, GraduationCap, Briefcase } from 'lucide-react'
 
 const featuredProjects = projects.filter((p) => p.featured)
 
 export default function Home() {
-  const [selectedProject, setSelectedProject] = useState<ProjectItemType | null>(null)
 
   return (
     <Container className="mt-9">
@@ -57,9 +54,9 @@ export default function Home() {
 
           <div className="space-y-4">
             {featuredProjects.map((project) => (
-              <button
+              <Link
                 key={project.name}
-                onClick={() => setSelectedProject(project)}
+                href={project.slug ? `/projects/${project.slug}` : '#'}
                 className="group w-full rounded-2xl border border-muted-foreground/20 bg-card p-6 text-left shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
                 data-track="home_featured_project"
                 data-track-data={project.name}
@@ -110,7 +107,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
@@ -175,13 +172,6 @@ export default function Home() {
           <SocialLinks />
         </div>
       </div>
-
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        isOpen={selectedProject !== null}
-        onClose={() => setSelectedProject(null)}
-      />
     </Container>
   )
 }
