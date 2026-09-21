@@ -65,8 +65,8 @@ export default function Home() {
                   {/* Index + Logo */}
                   <div className="flex shrink-0 items-center gap-3 sm:w-48">
                     <span className="text-3xl font-bold text-primary/20">{project.index}</span>
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
-                      <Favicon url={project.link.href} src={project.logo} alt={`${project.name} logo`} />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted/30">
+                      <Favicon url={project.link.href} src={project.logo} alt={`${project.name} logo`} size={40} borderRadius={20} background="transparent" />
                     </div>
                   </div>
 
