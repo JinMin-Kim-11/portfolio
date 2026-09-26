@@ -80,6 +80,33 @@ export type ProjectItemType = {
     productDecisions?: ProductDecision[]
     myRole?: string[]
     validation?: string[]
+    // 场景截图（真实使用案例）
+    scenarioScreenshots?: ScenarioScreenshot[]
+    // 关键数据指标（用于成果量化展示）
+    metrics?: MetricItem[]
+    // 核心价值（产品解决的核心问题）
+    coreValues?: CoreValueItem[]
+  }
+
+  export type ScenarioScreenshot = {
+    title: string
+    description: string
+    image: string
+    tags?: string[]
+    input?: string
+    output?: string
+  }
+
+  export type MetricItem = {
+    label: string
+    value: string
+    description?: string
+  }
+
+  export type CoreValueItem = {
+    title: string
+    description: string
+    icon?: string
   }
 
   // projects
@@ -357,6 +384,66 @@ export type ProjectItemType = {
         '设计 Git 提交统计、开发数据看板等功能，帮助管理者实时掌握团队进展',
         '实现部门周报自动生成，将人工整理时间从 2 小时缩短至 5 分钟',
         '完成产品需求文档与原型设计，协调研发团队推进功能落地',
+      ],
+
+      // 关键数据指标（真实运营数据，试点阶段）
+      metrics: [
+        { label: '典型场景示例', value: '4+', description: '覆盖 K8s 状态 / Git 仓库 / Pod 健康 / 数据库表数 等高频场景' },
+        { label: '接入工具数量', value: '6+', description: 'Git、Kubernetes、数据库、企业微信、自动化脚本、内部 API' },
+        { label: '日均查询次数', value: '10-50', description: '试点阶段日均调用量，覆盖日常运维与运营查询需求' },
+        { label: '使用团队', value: '2-3', description: '运营团队、研发团队、产品团队已开始稳定使用' }
+      ],
+
+      // 核心价值（产品解决的核心问题）
+      coreValues: [
+        {
+          title: '降低运维门槛',
+          description: '运营人员无需学习 Git CLI、kubectl、SQL 等专业工具，用自然语言就能查询技术数据，真正实现"说一句话就能拿到结果"。',
+          icon: 'graduation'
+        },
+        {
+          title: '统一操作入口',
+          description: '所有跨系统数据查询都收敛到企业微信一个入口，避免在多个后台之间切换，减少上下文切换成本。',
+          icon: 'portal'
+        },
+        {
+          title: '提升响应速度',
+          description: '以往一次数据查询需要找对应研发人员、平均耗时 30 分钟以上；现在 90% 的查询在 30 秒内返回结果。',
+          icon: 'speed'
+        },
+        {
+          title: '数据驱动决策',
+          description: '让运营和产品经理能够自助获取研发数据，把决策从"凭感觉"变成"看数据"，提升决策质量。',
+          icon: 'data'
+        }
+      ],
+
+      // 真实使用场景截图
+      scenarioScreenshots: [
+        {
+          title: 'K8s 服务状态查询',
+          description: '运营人员通过企业微信发起查询，Agent 自动调用 K8s API，返回核心服务的 Pod 状态、镜像版本、所在命名空间等关键信息。',
+          image: '/images/projects/openclaw/k8s-cta-status.png',
+          tags: ['Kubernetes', '服务状态', '高频场景'],
+          input: '帮我看一下 jms-cta 这边的服务状态',
+          output: '返回 4 个核心 Pod 状态（Running/Ready）+ Service 列表'
+        },
+        {
+          title: 'Pod 健康检查',
+          description: '针对某个具体服务（omni）查询所有 Pod 的健康状态，包括运行时长、重启次数、节点分布等，用于快速定位异常服务。',
+          image: '/images/projects/openclaw/omni-pod-health.png',
+          tags: ['健康检查', 'Pod 监控', '异常排查'],
+          input: 'omni pod 的状态',
+          output: '返回 8 个 Pod 全部 Running，0 重启，附带运行时长'
+        },
+        {
+          title: 'Git 仓库与数据库查询',
+          description: '支持 Git 仓库元数据查询（如"几个 git"会触发澄清后返回仓库列表），也能查询数据库表数量等业务元数据。',
+          image: '/images/projects/openclaw/git-db-query.png',
+          tags: ['Git', '数据库', '多轮澄清'],
+          input: '帮我查看一下有几个 git',
+          output: '澄清路径 → 列出 /root/.openclaw/workspace/.git 仓库'
+        }
       ]
     },
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Building2,
   ArrowRightLeft,
@@ -23,9 +24,14 @@ import {
   HashIcon,
   ArrowUpRight,
   ChevronLeft,
+  GraduationCap,
+  LayoutGrid,
+  Zap,
+  PieChart,
+  Quote,
 } from 'lucide-react'
 import { Favicon } from 'favicon-stealer'
-import { ProjectItemType } from '@/config/infoConfig'
+import { ProjectItemType, CoreValueItem, MetricItem, ScenarioScreenshot } from '@/config/infoConfig'
 import { utm_source } from '@/config/siteConfig'
 
 type NodePhase = 'business' | 'user' | 'product' | 'ai-tech' | 'validation'
@@ -133,6 +139,147 @@ function WorkflowStep({ step, index, total, accent }: { step: string; index: num
       </div>
       <p className="pb-3 pt-0.5 text-sm text-foreground/80 leading-relaxed">{step}</p>
     </div>
+  )
+}
+
+function CoreValueSection({ items }: { items: CoreValueItem[] }) {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {items.map((item, i) => {
+        const Icon =
+          item.icon === 'graduation' ? GraduationCap :
+          item.icon === 'portal' ? LayoutGrid :
+          item.icon === 'speed' ? Zap :
+          item.icon === 'data' ? PieChart :
+          Sparkles
+        return (
+          <div
+            key={i}
+            className="group relative overflow-hidden rounded-lg border border-muted-foreground/20 bg-white/60 dark:bg-zinc-800/50 p-4 transition-all hover:border-teal-500/40 hover:shadow-sm"
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-500/10 text-teal-500">
+                <Icon className="h-4 w-4" strokeWidth={2} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-foreground mb-1">{item.title}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function MetricGrid({ items }: { items: MetricItem[] }) {
+  return (
+    <div className="grid gap-3 grid-cols-2 sm:grid-cols-4">
+      {items.map((m, i) => (
+        <div
+          key={i}
+          className="rounded-lg border border-muted-foreground/20 bg-gradient-to-br from-teal-500/5 to-emerald-500/5 p-4 text-center transition-all hover:border-teal-500/40"
+        >
+          <p className="text-2xl sm:text-3xl font-bold text-teal-600 dark:text-teal-400 tracking-tight">
+            {m.value}
+          </p>
+          <p className="mt-1 text-xs font-medium text-foreground/80">{m.label}</p>
+          {m.description && (
+            <p className="mt-1.5 text-[10px] text-muted-foreground leading-relaxed line-clamp-2">
+              {m.description}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function ScenarioCard({ screenshot, index }: { screenshot: ScenarioScreenshot; index: number }) {
+  return (
+    <figure className="overflow-hidden rounded-lg border border-muted-foreground/20 bg-white/50 dark:bg-zinc-800/50">
+      <div className="relative aspect-[16/10] bg-muted">
+        <Image
+          src={screenshot.image}
+          alt={screenshot.title}
+          fill
+          sizes="(max-width: 640px) 100vw, 50vw"
+          className="object-cover object-top"
+        />
+        <div className="absolute top-2 left-2 flex h-6 w-6 items-center justify-center rounded-full bg-foreground/80 text-background text-xs font-bold backdrop-blur">
+          {index + 1}
+        </div>
+      </div>
+      <figcaption className="p-4">
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h4 className="text-sm font-semibold text-foreground">{screenshot.title}</h4>
+        </div>
+        <p className="text-xs text-muted-foreground leading-relaxed mb-3">
+          {screenshot.description}
+        </p>
+        {screenshot.input && (
+          <div className="mb-2 rounded-md bg-muted/60 px-3 py-2 border-l-2 border-teal-500/50">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-0.5">
+              用户输入
+            </p>
+            <p className="text-xs text-foreground/90 italic">"{screenshot.input}"</p>
+          </div>
+        )}
+        {screenshot.output && (
+          <div className="mb-3 rounded-md bg-muted/60 px-3 py-2 border-l-2 border-emerald-500/50">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-0.5">
+              Agent 输出
+            </p>
+            <p className="text-xs text-foreground/90">{screenshot.output}</p>
+          </div>
+        )}
+        {screenshot.tags && screenshot.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {screenshot.tags.map((tag, j) => (
+              <span
+                key={j}
+                className="rounded-md bg-teal-500/10 px-2 py-0.5 text-[10px] font-medium text-teal-600 dark:text-teal-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </figcaption>
+    </figure>
+  )
+}
+
+function ScenarioGallery({ screenshots }: { screenshots: ScenarioScreenshot[] }) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {screenshots.map((s, i) => (
+        <ScenarioCard key={i} screenshot={s} index={i} />
+      ))}
+    </div>
+  )
+}
+
+function HighlightSection({ title, icon: Icon, accent, children, id }: { title: string; icon: React.ComponentType<{ className?: string }>; accent: { border: string; bg: string; text: string; iconBg: string; iconText: string; dot: string }; children: React.ReactNode; id?: string }) {
+  return (
+    <section
+      id={id}
+      className={`scroll-mt-24 rounded-xl border-l-4 ${accent.border} ${accent.bg} p-5 sm:p-6`}
+    >
+      <div className="flex items-center gap-3 mb-4">
+        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${accent.iconBg}`}>
+          <Icon className={`h-5 w-5 ${accent.iconText}`} />
+        </div>
+        <div>
+          <p className={`text-xs font-semibold tracking-wider uppercase ${accent.iconText}`}>
+            HIGHLIGHT
+          </p>
+          <h2 className="text-lg font-bold text-foreground">{title}</h2>
+        </div>
+      </div>
+      <div className="text-sm sm:text-base">{children}</div>
+    </section>
   )
 }
 
@@ -451,6 +598,70 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
               {visibleNodes.map((node) => (
                 <NodeSection key={node.id} node={node} project={project} />
               ))}
+
+              {/* 核心价值 / 关键数据 / 场景截图（Highlight Section） */}
+              {(project.coreValues || project.metrics || project.scenarioScreenshots) && (
+                <div className="mt-4 pt-6 border-t-2 border-dashed border-muted-foreground/20">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-4">
+                    HIGHLIGHTS · 产品亮点速览
+                  </p>
+                  <div className="flex flex-col gap-6">
+                    {project.coreValues && project.coreValues.length > 0 && (
+                      <HighlightSection
+                        id="core-values"
+                        title="核心价值"
+                        icon={Sparkles}
+                        accent={{
+                          border: 'border-l-teal-500',
+                          bg: 'bg-teal-500/5',
+                          text: 'text-teal-600 dark:text-teal-400',
+                          iconBg: 'bg-teal-500/10',
+                          iconText: 'text-teal-500',
+                          dot: 'bg-teal-500',
+                        }}
+                      >
+                        <CoreValueSection items={project.coreValues} />
+                      </HighlightSection>
+                    )}
+
+                    {project.metrics && project.metrics.length > 0 && (
+                      <HighlightSection
+                        id="metrics"
+                        title="关键数据"
+                        icon={BarChart3}
+                        accent={{
+                          border: 'border-l-emerald-500',
+                          bg: 'bg-emerald-500/5',
+                          text: 'text-emerald-600 dark:text-emerald-400',
+                          iconBg: 'bg-emerald-500/10',
+                          iconText: 'text-emerald-500',
+                          dot: 'bg-emerald-500',
+                        }}
+                      >
+                        <MetricGrid items={project.metrics} />
+                      </HighlightSection>
+                    )}
+
+                    {project.scenarioScreenshots && project.scenarioScreenshots.length > 0 && (
+                      <HighlightSection
+                        id="scenarios"
+                        title="真实使用场景"
+                        icon={Quote}
+                        accent={{
+                          border: 'border-l-violet-500',
+                          bg: 'bg-violet-500/5',
+                          text: 'text-violet-600 dark:text-violet-400',
+                          iconBg: 'bg-violet-500/10',
+                          iconText: 'text-violet-500',
+                          dot: 'bg-violet-500',
+                        }}
+                      >
+                        <ScenarioGallery screenshots={project.scenarioScreenshots} />
+                      </HighlightSection>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Tech Stack */}
