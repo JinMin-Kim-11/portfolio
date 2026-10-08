@@ -29,9 +29,11 @@ import {
   Zap,
   PieChart,
   Quote,
+  UserCog,
+  Layers,
 } from 'lucide-react'
 import { Favicon } from 'favicon-stealer'
-import { ProjectItemType, CoreValueItem, MetricItem, ScenarioScreenshot } from '@/config/infoConfig'
+import { ProjectItemType, CoreValueItem, MetricItem, ScenarioScreenshot, MyContribution, ValueScenarioMapping } from '@/config/infoConfig'
 import { utm_source } from '@/config/siteConfig'
 
 type NodePhase = 'business' | 'user' | 'product' | 'ai-tech' | 'validation'
@@ -197,63 +199,121 @@ function MetricGrid({ items }: { items: MetricItem[] }) {
 }
 
 function ScenarioCard({ screenshot, index }: { screenshot: ScenarioScreenshot; index: number }) {
+  const isComplex = screenshot.isComplexTask
+  const accentText = isComplex ? 'text-violet-600 dark:text-violet-400' : 'text-teal-600 dark:text-teal-400'
+  const accentBorder = isComplex ? 'border-l-violet-500' : 'border-l-teal-500'
+  const accentBg = isComplex ? 'bg-violet-500/5' : 'bg-teal-500/5'
+  const accentIconBg = isComplex ? 'bg-violet-500/10' : 'bg-teal-500/10'
+  const accentIconText = isComplex ? 'text-violet-500' : 'text-teal-500'
+
   return (
-    <figure className="overflow-hidden rounded-lg border border-muted-foreground/20 bg-white/50 dark:bg-zinc-800/50">
-      <div className="relative aspect-[16/10] bg-muted">
-        <Image
-          src={screenshot.image}
-          alt={screenshot.title}
-          fill
-          sizes="(max-width: 640px) 100vw, 50vw"
-          className="object-cover object-top"
-        />
-        <div className="absolute top-2 left-2 flex h-6 w-6 items-center justify-center rounded-full bg-foreground/80 text-background text-xs font-bold backdrop-blur">
-          {index + 1}
+    <article className="overflow-hidden rounded-xl border border-muted-foreground/20">
+      {/* Header */}
+      <div className={`px-5 py-4 ${accentBg} border-l-4 ${accentBorder}`}>
+        <div className="flex items-center gap-2 mb-1">
+          <span className={`flex h-6 w-6 items-center justify-center rounded-full ${accentIconBg} text-xs font-bold ${accentIconText}`}>
+            {index + 1}
+          </span>
+          <h4 className="text-base font-bold text-foreground">{screenshot.title}</h4>
+          {isComplex && (
+            <span className="ml-auto rounded-md bg-violet-500/10 px-2 py-0.5 text-[10px] font-medium text-violet-600 dark:text-violet-400">
+              复杂任务
+            </span>
+          )}
         </div>
+        <p className="text-xs text-muted-foreground leading-relaxed">{screenshot.description}</p>
       </div>
-      <figcaption className="p-4">
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h4 className="text-sm font-semibold text-foreground">{screenshot.title}</h4>
-        </div>
-        <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-          {screenshot.description}
-        </p>
+
+      <div className="p-5 space-y-4">
+        {/* ① 用户问题 */}
         {screenshot.input && (
-          <div className="mb-2 rounded-md bg-muted/60 px-3 py-2 border-l-2 border-teal-500/50">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-0.5">
-              用户输入
-            </p>
-            <p className="text-xs text-foreground/90 italic">"{screenshot.input}"</p>
+          <div>
+            <p className={`text-[10px] font-bold uppercase tracking-wider ${accentText} mb-1.5`}>① 用户问题</p>
+            <div className="rounded-md bg-teal-500/5 px-3 py-2 border-l-2 border-teal-500/50">
+              <p className="text-sm text-foreground/90 italic">&ldquo;{screenshot.input}&rdquo;</p>
+            </div>
           </div>
         )}
+
+        {/* ② 用户原来的解决方式 */}
+        {screenshot.originalSolution && (
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-1.5">② 用户原来的解决方式</p>
+            <div className="rounded-md bg-rose-500/5 px-3 py-2 border-l-2 border-rose-500/50">
+              <p className="text-xs text-foreground/80 leading-relaxed">{screenshot.originalSolution}</p>
+            </div>
+          </div>
+        )}
+
+        {/* ③ Agent 如何解决 */}
+        {screenshot.agentSteps && screenshot.agentSteps.length > 0 && (
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 mb-1.5">③ Agent 如何解决</p>
+            <div className="flex flex-col gap-1.5 pl-1">
+              {screenshot.agentSteps.map((step, i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-500/10 text-[10px] font-bold text-violet-600 dark:text-violet-400 mt-0.5">
+                    {i + 1}
+                  </span>
+                  <span className="text-xs text-foreground/80 leading-relaxed">{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 截图 */}
+        <figure className="overflow-hidden rounded-lg border border-muted-foreground/15">
+          <div className="relative aspect-[16/10] bg-muted">
+            <Image
+              src={screenshot.image}
+              alt={screenshot.title}
+              fill
+              sizes="(max-width: 640px) 100vw, 100%"
+              className="object-cover object-top"
+            />
+          </div>
+        </figure>
+
+        {/* ④ 为什么这个场景适合 AI */}
+        {screenshot.whyAIForThisScenario && (
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1.5">④ 为什么这个场景适合 AI</p>
+            <div className="rounded-md bg-amber-500/5 px-3 py-2 border-l-2 border-amber-500/50">
+              <p className="text-xs text-foreground/80 leading-relaxed">{screenshot.whyAIForThisScenario}</p>
+            </div>
+          </div>
+        )}
+
+        {/* ⑤ 最终结果 */}
         {screenshot.output && (
-          <div className="mb-3 rounded-md bg-muted/60 px-3 py-2 border-l-2 border-emerald-500/50">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-0.5">
-              Agent 输出
-            </p>
-            <p className="text-xs text-foreground/90">{screenshot.output}</p>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1.5">⑤ 最终结果</p>
+            <div className="rounded-md bg-emerald-500/5 px-3 py-2 border-l-2 border-emerald-500/50">
+              <p className="text-xs text-foreground/80 leading-relaxed">{screenshot.output}</p>
+            </div>
+            {screenshot.resultMetric && (
+              <p className="mt-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">{screenshot.resultMetric}</p>
+            )}
           </div>
         )}
+
+        {/* Tags */}
         {screenshot.tags && screenshot.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {screenshot.tags.map((tag, j) => (
-              <span
-                key={j}
-                className="rounded-md bg-teal-500/10 px-2 py-0.5 text-[10px] font-medium text-teal-600 dark:text-teal-400"
-              >
-                {tag}
-              </span>
+              <span key={j} className="rounded-md bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">{tag}</span>
             ))}
           </div>
         )}
-      </figcaption>
-    </figure>
+      </div>
+    </article>
   )
 }
 
 function ScenarioGallery({ screenshots }: { screenshots: ScenarioScreenshot[] }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="flex flex-col gap-6">
       {screenshots.map((s, i) => (
         <ScenarioCard key={i} screenshot={s} index={i} />
       ))}
@@ -261,7 +321,58 @@ function ScenarioGallery({ screenshots }: { screenshots: ScenarioScreenshot[] })
   )
 }
 
-function HighlightSection({ title, icon: Icon, accent, children, id }: { title: string; icon: React.ComponentType<{ className?: string }>; accent: { border: string; bg: string; text: string; iconBg: string; iconText: string; dot: string }; children: React.ReactNode; id?: string }) {
+function MyContributionSection({ contribution }: { contribution: MyContribution }) {
+  return (
+    <div className="space-y-4">
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-2">我主要负责</p>
+        <ul className="flex flex-col gap-2">
+          {contribution.myResponsibilities.map((r, i) => (
+            <li key={i} className="flex gap-2.5">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-500" />
+              <span className="text-sm text-foreground/80 leading-relaxed">{r}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {contribution.devCollaboration && (
+        <div className="rounded-md bg-muted/50 px-3 py-2.5 border-l-2 border-muted-foreground/30">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">研发协作</p>
+          <p className="text-xs text-foreground/70 leading-relaxed">{contribution.devCollaboration}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ValueScenarioTable({ mappings }: { mappings: ValueScenarioMapping[] }) {
+  return (
+    <div className="overflow-hidden rounded-lg border border-muted-foreground/20">
+      <table className="w-full text-sm">
+        <thead className="bg-muted/50">
+          <tr>
+            <th className="px-3 py-2.5 text-left text-xs font-semibold text-foreground/80">业务价值</th>
+            <th className="px-3 py-2.5 text-left text-xs font-semibold text-foreground/80">实际场景</th>
+            <th className="px-3 py-2.5 text-left text-xs font-semibold text-foreground/80">产品能力</th>
+            <th className="px-3 py-2.5 text-left text-xs font-semibold text-foreground/80">结果</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-muted-foreground/10">
+          {mappings.map((m, i) => (
+            <tr key={i} className="hover:bg-muted/30 transition-colors">
+              <td className="px-3 py-2.5 text-xs font-medium text-teal-600 dark:text-teal-400">{m.value}</td>
+              <td className="px-3 py-2.5 text-xs text-foreground/80">{m.scenario}</td>
+              <td className="px-3 py-2.5 text-xs text-muted-foreground">{m.capability}</td>
+              <td className="px-3 py-2.5 text-xs text-emerald-600 dark:text-emerald-400">{m.result}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function HighlightSection({ title, icon: Icon, accent, children, id, subtitle }: { title: string; icon: React.ComponentType<{ className?: string }>; accent: { border: string; bg: string; text: string; iconBg: string; iconText: string; dot: string }; children: React.ReactNode; id?: string; subtitle?: string }) {
   return (
     <section
       id={id}
@@ -273,7 +384,7 @@ function HighlightSection({ title, icon: Icon, accent, children, id }: { title: 
         </div>
         <div>
           <p className={`text-xs font-semibold tracking-wider uppercase ${accent.iconText}`}>
-            HIGHLIGHT
+            {subtitle || 'HIGHLIGHT'}
           </p>
           <h2 className="text-lg font-bold text-foreground">{title}</h2>
         </div>
@@ -421,6 +532,16 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
 
   const visibleNodes = NODES.filter((n) => n.hasContent(project))
 
+  // Split nodes: before evaluation (01-11) and after (12-15)
+  const evaluationIndex = visibleNodes.findIndex((n) => n.id === 'evaluation')
+  const hasEvidenceBlock = !!(project.myContribution || project.valueScenarioMappings || (project.scenarioScreenshots && project.scenarioScreenshots.length > 0))
+  const nodesBeforeEvidence = hasEvidenceBlock && evaluationIndex >= 0
+    ? visibleNodes.slice(0, evaluationIndex + 1)
+    : visibleNodes
+  const nodesAfterEvidence = hasEvidenceBlock && evaluationIndex >= 0
+    ? visibleNodes.slice(evaluationIndex + 1)
+    : []
+
   const utmLink = project.link.href.startsWith('http')
     ? `${project.link.href}?utm_source=${utm_source}`
     : project.link.href
@@ -445,6 +566,13 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
 
     visibleNodes.forEach((node) => {
       const el = document.getElementById(node.id)
+      if (el) observer.observe(el)
+    })
+
+    // Also observe evidence section IDs
+    const evidenceIds = ['my-contribution', 'value-mapping', 'scenarios', 'core-values', 'metrics']
+    evidenceIds.forEach((id) => {
+      const el = document.getElementById(id)
       if (el) observer.observe(el)
     })
 
@@ -566,7 +694,6 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
                         <ul className="space-y-0.5">
                           {phaseGroups[phase].map((node) => {
                             const isActive = activeId === node.id
-                            const Icon = node.icon
                             return (
                               <li key={node.id}>
                                 <a
@@ -588,6 +715,65 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
                       </div>
                     )
                 )}
+
+                {/* Evidence section in TOC */}
+                {hasEvidenceBlock && (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wider mb-1.5 text-teal-600 dark:text-teal-400">
+                      产品证据
+                    </p>
+                    <ul className="space-y-0.5">
+                      {project.myContribution && (
+                        <li>
+                          <a
+                            href="#my-contribution"
+                            onClick={(e) => handleTocClick(e, 'my-contribution')}
+                            className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-xs transition-all ${
+                              activeId === 'my-contribution'
+                                ? 'bg-teal-500/10 text-teal-600 dark:text-teal-400 font-medium'
+                                : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            }`}
+                          >
+                            <UserCog className="h-3 w-3 opacity-60" />
+                            <span className="truncate">我的贡献</span>
+                          </a>
+                        </li>
+                      )}
+                      {project.valueScenarioMappings && project.valueScenarioMappings.length > 0 && (
+                        <li>
+                          <a
+                            href="#value-mapping"
+                            onClick={(e) => handleTocClick(e, 'value-mapping')}
+                            className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-xs transition-all ${
+                              activeId === 'value-mapping'
+                                ? 'bg-teal-500/10 text-teal-600 dark:text-teal-400 font-medium'
+                                : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            }`}
+                          >
+                            <Layers className="h-3 w-3 opacity-60" />
+                            <span className="truncate">价值映射</span>
+                          </a>
+                        </li>
+                      )}
+                      {project.scenarioScreenshots && project.scenarioScreenshots.length > 0 && (
+                        <li>
+                          <a
+                            href="#scenarios"
+                            onClick={(e) => handleTocClick(e, 'scenarios')}
+                            className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-xs transition-all ${
+                              activeId === 'scenarios'
+                                ? 'bg-teal-500/10 text-teal-600 dark:text-teal-400 font-medium'
+                                : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            }`}
+                          >
+                            <Quote className="h-3 w-3 opacity-60" />
+                            <span className="truncate">真实场景</span>
+                          </a>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                )}
               </div>
             </nav>
           </aside>
@@ -595,21 +781,95 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
           {/* Main Content */}
           <div ref={contentRef} className="flex-1 min-w-0">
             <div className="flex flex-col gap-6">
-              {visibleNodes.map((node) => (
+              {/* Nodes 01-11 (before evidence) */}
+              {nodesBeforeEvidence.map((node) => (
                 <NodeSection key={node.id} node={node} project={project} />
               ))}
 
-              {/* 核心价值 / 关键数据 / 场景截图（Highlight Section） */}
-              {(project.coreValues || project.metrics || project.scenarioScreenshots) && (
+              {/* Evidence Block: My Contribution + Value Mapping + Real Scenarios */}
+              {hasEvidenceBlock && (
                 <div className="mt-4 pt-6 border-t-2 border-dashed border-muted-foreground/20">
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-4">
-                    HIGHLIGHTS · 产品亮点速览
+                    EVIDENCE · 产品证据
+                  </p>
+                  <div className="flex flex-col gap-6">
+                    {project.myContribution && (
+                      <HighlightSection
+                        id="my-contribution"
+                        title="我的贡献"
+                        subtitle="MY CONTRIBUTION"
+                        icon={UserCog}
+                        accent={{
+                          border: 'border-l-teal-500',
+                          bg: 'bg-teal-500/5',
+                          text: 'text-teal-600 dark:text-teal-400',
+                          iconBg: 'bg-teal-500/10',
+                          iconText: 'text-teal-500',
+                          dot: 'bg-teal-500',
+                        }}
+                      >
+                        <MyContributionSection contribution={project.myContribution} />
+                      </HighlightSection>
+                    )}
+
+                    {project.valueScenarioMappings && project.valueScenarioMappings.length > 0 && (
+                      <HighlightSection
+                        id="value-mapping"
+                        title="价值-场景映射"
+                        subtitle="VALUE MAPPING"
+                        icon={Layers}
+                        accent={{
+                          border: 'border-l-blue-500',
+                          bg: 'bg-blue-500/5',
+                          text: 'text-blue-600 dark:text-blue-400',
+                          iconBg: 'bg-blue-500/10',
+                          iconText: 'text-blue-500',
+                          dot: 'bg-blue-500',
+                        }}
+                      >
+                        <ValueScenarioTable mappings={project.valueScenarioMappings} />
+                      </HighlightSection>
+                    )}
+
+                    {project.scenarioScreenshots && project.scenarioScreenshots.length > 0 && (
+                      <HighlightSection
+                        id="scenarios"
+                        title="真实使用场景"
+                        subtitle="PRODUCT EVIDENCE"
+                        icon={Quote}
+                        accent={{
+                          border: 'border-l-violet-500',
+                          bg: 'bg-violet-500/5',
+                          text: 'text-violet-600 dark:text-violet-400',
+                          iconBg: 'bg-violet-500/10',
+                          iconText: 'text-violet-500',
+                          dot: 'bg-violet-500',
+                        }}
+                      >
+                        <ScenarioGallery screenshots={project.scenarioScreenshots} />
+                      </HighlightSection>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Nodes 12-15 (after evidence) */}
+              {nodesAfterEvidence.map((node) => (
+                <NodeSection key={node.id} node={node} project={project} />
+              ))}
+
+              {/* Summary: Core Values + Metrics */}
+              {(project.coreValues || project.metrics) && (
+                <div className="mt-4 pt-6 border-t-2 border-dashed border-muted-foreground/20">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-4">
+                    SUMMARY · 价值与数据
                   </p>
                   <div className="flex flex-col gap-6">
                     {project.coreValues && project.coreValues.length > 0 && (
                       <HighlightSection
                         id="core-values"
                         title="核心价值"
+                        subtitle="CORE VALUES"
                         icon={Sparkles}
                         accent={{
                           border: 'border-l-teal-500',
@@ -628,6 +888,7 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
                       <HighlightSection
                         id="metrics"
                         title="关键数据"
+                        subtitle="KEY METRICS"
                         icon={BarChart3}
                         accent={{
                           border: 'border-l-emerald-500',
@@ -639,24 +900,11 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
                         }}
                       >
                         <MetricGrid items={project.metrics} />
-                      </HighlightSection>
-                    )}
-
-                    {project.scenarioScreenshots && project.scenarioScreenshots.length > 0 && (
-                      <HighlightSection
-                        id="scenarios"
-                        title="真实使用场景"
-                        icon={Quote}
-                        accent={{
-                          border: 'border-l-violet-500',
-                          bg: 'bg-violet-500/5',
-                          text: 'text-violet-600 dark:text-violet-400',
-                          iconBg: 'bg-violet-500/10',
-                          iconText: 'text-violet-500',
-                          dot: 'bg-violet-500',
-                        }}
-                      >
-                        <ScenarioGallery screenshots={project.scenarioScreenshots} />
+                        {project.metricsNote && (
+                          <p className="mt-3 text-[10px] text-muted-foreground/70 italic">
+                            * {project.metricsNote}
+                          </p>
+                        )}
                       </HighlightSection>
                     )}
                   </div>

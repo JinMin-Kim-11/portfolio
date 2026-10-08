@@ -86,6 +86,12 @@ export type ProjectItemType = {
     metrics?: MetricItem[]
     // 核心价值（产品解决的核心问题）
     coreValues?: CoreValueItem[]
+    // 我的贡献（区分个人职责与团队协作）
+    myContribution?: MyContribution
+    // 价值-场景映射表
+    valueScenarioMappings?: ValueScenarioMapping[]
+    // 数据来源说明
+    metricsNote?: string
   }
 
   export type ScenarioScreenshot = {
@@ -95,6 +101,11 @@ export type ProjectItemType = {
     tags?: string[]
     input?: string
     output?: string
+    originalSolution?: string
+    agentSteps?: string[]
+    whyAIForThisScenario?: string
+    resultMetric?: string
+    isComplexTask?: boolean
   }
 
   export type MetricItem = {
@@ -107,6 +118,18 @@ export type ProjectItemType = {
     title: string
     description: string
     icon?: string
+  }
+
+  export type MyContribution = {
+    myResponsibilities: string[]
+    devCollaboration?: string
+  }
+
+  export type ValueScenarioMapping = {
+    value: string
+    scenario: string
+    capability: string
+    result: string
   }
 
   // projects
@@ -386,13 +409,35 @@ export type ProjectItemType = {
         '完成产品需求文档与原型设计，协调研发团队推进功能落地',
       ],
 
-      // 关键数据指标（真实运营数据，试点阶段）
-      metrics: [
-        { label: '典型场景示例', value: '4+', description: '覆盖 K8s 状态 / Git 仓库 / Pod 健康 / 数据库表数 等高频场景' },
-        { label: '接入工具数量', value: '6+', description: 'Git、Kubernetes、数据库、企业微信、自动化脚本、内部 API' },
-        { label: '日均查询次数', value: '10-50', description: '试点阶段日均调用量，覆盖日常运维与运营查询需求' },
-        { label: '使用团队', value: '2-3', description: '运营团队、研发团队、产品团队已开始稳定使用' }
+      // 我的贡献（区分个人职责与研发协作）
+      myContribution: {
+        myResponsibilities: [
+          '业务需求调研与场景识别：深入运营团队，梳理高频查询需求并排序优先级',
+          'Agent 产品方案设计：定义 6+ 工具的调用场景、输入输出协议和验收标准',
+          'Workflow 设计：设计意图解析 → 工具路由 → 结果聚合的完整流程',
+          'Prompt / Schema 知识库设计：定义数据库表结构、字段含义等元数据',
+          '测试与效果验证：设计四层评估体系，跟踪 AI/Agent/产品/商业指标',
+          '根据用户反馈推动迭代：建立点赞/点踩反馈闭环，优化查询成功率',
+        ],
+        devCollaboration: '研发团队负责底层 Tool/API 实现（Git、K8s、SQL 执行引擎）；我的职责是定义工具能力边界、输入输出协议、调用场景和验收标准'
+      },
+
+      // 价值-场景映射表（业务价值 → 实际场景 → 产品能力 → 结果）
+      valueScenarioMappings: [
+        { value: '降低技术门槛', scenario: '数据库记录查询', capability: '自然语言 → SQL 生成', result: '运营无需学习 SQL' },
+        { value: '降低沟通成本', scenario: 'K8s 部署状态查询', capability: 'K8s Tool 自动调用', result: '无需找研发查状态' },
+        { value: '提升响应速度', scenario: 'K8s + DB 混合查询', capability: '多工具并行编排', result: '秒级返回多源数据' },
+        { value: '减少重复劳动', scenario: '部门周报生成', capability: '多源聚合 + LLM 总结', result: '2h → 5min' },
       ],
+
+      // 关键数据指标（试点阶段真实数据）
+      metrics: [
+        { label: '典型场景示例', value: '4+', description: 'K8s 状态 / Git 仓库 / Pod 健康 / 数据库表数' },
+        { label: '接入工具数量', value: '6+', description: 'Git / Kubernetes / 数据库 / 企业微信 / 脚本 / API' },
+        { label: '日均查询次数', value: '10-50', description: '试点阶段日均调用量' },
+        { label: '使用团队', value: '2-3', description: '运营 / 研发 / 产品团队' }
+      ],
+      metricsNote: '以上为试点阶段真实数据，非正式上线生产环境指标',
 
       // 核心价值（产品解决的核心问题）
       coreValues: [
@@ -408,7 +453,7 @@ export type ProjectItemType = {
         },
         {
           title: '提升响应速度',
-          description: '以往一次数据查询需要找对应研发人员、平均耗时 30 分钟以上；现在 90% 的查询在 30 秒内返回结果。',
+          description: '以往一次数据查询需要找对应研发人员、平均耗时 30 分钟以上；现在大部分查询在 30 秒内返回结果。',
           icon: 'speed'
         },
         {
@@ -418,23 +463,47 @@ export type ProjectItemType = {
         }
       ],
 
-      // 真实使用场景截图
+      // 真实使用场景（产品证据展示）
       scenarioScreenshots: [
         {
-          title: '数据库表记录查询',
-          description: '运营人员通过企业微信直接查询业务数据库，Agent 自动解析表结构并返回结构化结果，包含字段值、状态标识、时间戳等完整信息，并自动生成关键差异对比表。',
+          title: '场景 01｜数据库表记录查询',
+          description: '运营人员通过企业微信直接查询业务数据库，Agent 自动解析表结构并返回结构化结果。',
           image: '/images/projects/openclaw/db-admin-query.png',
           tags: ['数据库', 'SQL 查询', '结构化输出', '差异对比'],
           input: '@test 帮我查一下 dev_jingsocial 库里面 admin 表 用户为 leo 的记录',
-          output: '返回 2 条 admin 表记录（ID: 247/2050），含字段值、状态、创建时间、权限等级，并自动生成关键差异对比表'
+          output: '返回 2 条 admin 表记录（ID: 247/2050），含字段值、状态、创建时间、权限等级，并自动生成关键差异对比表',
+          originalSolution: '运营在企业微信找研发 → 研发登录数据库 → 手动写 SQL → 查询 → 整理结果 → 回复运营（平均耗时 30 分钟+）',
+          agentSteps: [
+            '意图识别：解析"查 admin 表 leo 的记录"为数据库查询意图',
+            'Schema 检索：从知识库获取 admin 表结构定义',
+            'SQL 生成：生成 SELECT 语句，WHERE user = "leo"',
+            '安全校验：确认为只读查询，执行权限检查',
+            'SQL 执行：调用数据库 Tool 执行查询',
+            '结果结构化：将原始数据转为表格 + 差异对比',
+            '自然语言总结：附上关键差异说明返回企业微信',
+          ],
+          whyAIForThisScenario: '用户表达的是"帮我看看 Leo 的账号状态"而不是"请执行 SELECT * FROM admin WHERE..."。传统后台需要为每种查询开发表单页面，而 LLM 能理解自然语言意图、自动生成 SQL，一个入口覆盖几乎所有查询场景。',
+          resultMetric: '2 条记录返回 / 约 10 秒（含意图识别 + SQL 生成 + 执行 + 总结）',
         },
         {
-          title: 'K8s 部署状态与数据库表数量查询',
-          description: '支持多场景混合查询：既能查看 K8s 部署的 Pod 状态（CrashLoopBackOff、Running、Pending），也能快速查询数据库表数量，覆盖运维与开发日常高频需求。',
+          title: '场景 02｜K8s 部署状态与数据库表数量查询',
+          description: '一个自然语言输入触发多个工具、多数据源查询，体现 Agent 的多步任务编排能力。',
           image: '/images/projects/openclaw/k8s-db-table-count.png',
-          tags: ['Kubernetes', '数据库', '多场景', '高频查询'],
+          tags: ['Kubernetes', '数据库', '多工具编排', '复杂任务'],
           input: '帮我查看下 dev_jingsocial 库有多少表 / dev_domain 库有多少张表',
-          output: 'dev_jingsocial 库 582 张表；dev_domain 库 3 张表（jing_domain 等）'
+          output: 'dev_jingsocial 库 582 张表；dev_domain 库 3 张表（jing_domain 等）；同时展示 K8s Pod 部署状态',
+          originalSolution: '运营找运维查 K8s 状态 → 找研发查数据库表数 → 两个系统分别登录 → 手动汇总信息回复（跨部门沟通耗时 40 分钟+）',
+          agentSteps: [
+            '意图解析：识别为多目标查询（K8s 状态 + 数据库表数）',
+            '工具路由：并行调度 K8s Tool + Database Tool',
+            'K8s 查询：获取 Pod 列表（CrashLoopBackOff / Running / Pending）',
+            'DB 查询：查询 dev_jingsocial 和 dev_domain 两个库的表数量',
+            '数据聚合：合并多源结果',
+            'LLM 总结：生成结构化自然语言回复',
+          ],
+          whyAIForThisScenario: '用户只说一句"帮我看看当前环境有没有异常，同时查一下表数量"。这实际是一个多步骤任务：需要时间理解 → 服务识别 → K8s 查询 → 状态判断 → DB 查询 → 结果汇总。传统工具无法用一句话覆盖多个系统，而 Agent 能自动拆解任务、并行调用多个工具。',
+          resultMetric: '多源数据秒级返回 / 一次对话完成跨系统查询',
+          isComplexTask: true,
         }
       ]
     },
