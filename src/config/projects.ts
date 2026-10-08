@@ -443,6 +443,14 @@ export type ProjectItemType = {
           tags: ['Git', '数据库', '多轮澄清'],
           input: '帮我查看一下有几个 git',
           output: '澄清路径 → 列出 /root/.openclaw/workspace/.git 仓库'
+        },
+        {
+          title: '数据库表记录查询',
+          description: '运营人员通过企业微信直接查询业务数据库，Agent 自动解析表结构并返回结构化结果，包含字段值、状态标识、时间戳等完整信息。',
+          image: '/images/projects/openclaw/db-admin-query.png',
+          tags: ['数据库', 'SQL 查询', '结构化输出'],
+          input: '@test 帮我查一下 dev_jingsocial 库里面 admin 表 用户为 leo 的记录',
+          output: '返回 2 条 admin 表记录（ID: 247/2050），包含字段值、状态、创建时间、权限等级等'
         }
       ]
     },
