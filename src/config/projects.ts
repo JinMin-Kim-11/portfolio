@@ -446,11 +446,19 @@ export type ProjectItemType = {
         },
         {
           title: '数据库表记录查询',
-          description: '运营人员通过企业微信直接查询业务数据库，Agent 自动解析表结构并返回结构化结果，包含字段值、状态标识、时间戳等完整信息。',
+          description: '运营人员通过企业微信直接查询业务数据库，Agent 自动解析表结构并返回结构化结果，包含字段值、状态标识、时间戳等完整信息，并自动生成关键差异对比表。',
           image: '/images/projects/openclaw/db-admin-query.png',
-          tags: ['数据库', 'SQL 查询', '结构化输出'],
+          tags: ['数据库', 'SQL 查询', '结构化输出', '差异对比'],
           input: '@test 帮我查一下 dev_jingsocial 库里面 admin 表 用户为 leo 的记录',
-          output: '返回 2 条 admin 表记录（ID: 247/2050），包含字段值、状态、创建时间、权限等级等'
+          output: '返回 2 条 admin 表记录（ID: 247/2050），含字段值、状态、创建时间、权限等级，并自动生成关键差异对比表'
+        },
+        {
+          title: 'K8s 部署状态与数据库表数量查询',
+          description: '支持多场景混合查询：既能查看 K8s 部署的 Pod 状态（CrashLoopBackOff、Running、Pending），也能快速查询数据库表数量，覆盖运维与开发日常高频需求。',
+          image: '/images/projects/openclaw/k8s-db-table-count.png',
+          tags: ['Kubernetes', '数据库', '多场景', '高频查询'],
+          input: '帮我查看下 dev_jingsocial 库有多少表 / dev_domain 库有多少张表',
+          output: 'dev_jingsocial 库 582 张表；dev_domain 库 3 张表（jing_domain 等）'
         }
       ]
     },
