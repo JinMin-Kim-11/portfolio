@@ -32,7 +32,6 @@ import {
   UserCog,
   Layers,
 } from 'lucide-react'
-import { Favicon } from 'favicon-stealer'
 import { ProjectItemType, CoreValueItem, MetricItem, ScenarioScreenshot, MyContribution, ValueScenarioMapping } from '@/config/infoConfig'
 import { utm_source } from '@/config/siteConfig'
 
@@ -612,8 +611,8 @@ export function ProjectDetail({ project }: { project: ProjectItemType }) {
           </Link>
 
           <div className="flex flex-col sm:flex-row sm:items-start gap-6">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-zinc-800 shadow-sm border border-muted-foreground/10">
-              <Favicon url={project.link.href} src={project.logo} alt={`${project.name} logo`} />
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-zinc-800 shadow-sm border border-muted-foreground/10 overflow-hidden">
+              <img src={project.logo} alt={`${project.name} logo`} className="h-14 w-14 object-contain" />
             </div>
             <div className="flex-1">
               {project.index && (

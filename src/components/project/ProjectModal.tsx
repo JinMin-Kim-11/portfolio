@@ -6,7 +6,6 @@ import { X, ArrowUpRight, Calendar, UserCircle, Sparkle, Target, Lightbulb, Work
 import { ProjectItemType } from '@/config/infoConfig'
 import { utm_source } from '@/config/siteConfig'
 import Link from 'next/link'
-import { Favicon } from "favicon-stealer"
 
 function Section({ icon: Icon, title, children, accent = 'text-teal-500' }: {
   icon: React.ComponentType<{ className?: string }>
@@ -121,8 +120,8 @@ export function ProjectModal({
               <div className="flex flex-col gap-6 pr-8">
                 {/* Header */}
                 <div className="flex flex-row items-center gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full">
-                    <Favicon url={project.link.href} src={project.logo} alt={`${project.name} logo`} />
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full overflow-hidden">
+                    <img src={project.logo} alt={`${project.name} logo`} className="h-12 w-12 object-contain" />
                   </div>
                   <div>
                     <Dialog.Title className="text-xl font-bold tracking-tight">

@@ -3,7 +3,6 @@
 import { Container } from '@/components/layout/Container'
 import SocialLinks from '@/components/home/SocialLinks'
 import { projects } from '@/config/infoConfig'
-import { Favicon } from 'favicon-stealer'
 import Link from 'next/link'
 import { ArrowRight, MapPin, GraduationCap, Briefcase } from 'lucide-react'
 
@@ -65,8 +64,12 @@ export default function Home() {
                   {/* Index + Logo */}
                   <div className="flex shrink-0 items-center gap-3 sm:w-48">
                     <span className="text-3xl font-bold text-primary/20">{project.index}</span>
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted/30">
-                      <Favicon url={project.link.href} src={project.logo} alt={`${project.name} logo`} size={40} borderRadius={20} background="transparent" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full">
+                      <img
+                        src={project.logo}
+                        alt={`${project.name} logo`}
+                        className="h-10 w-10 object-contain"
+                      />
                     </div>
                   </div>
 

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { HashIcon } from 'lucide-react'
 import { ArrowUpRight } from '@phosphor-icons/react'
 import { ProjectItemType } from '@/config/infoConfig'
-import { Favicon } from "favicon-stealer"
 import { ProjectModal } from './ProjectModal'
 
 export function ProjectCard({ project, titleAs }: { project: ProjectItemType, titleAs?: keyof React.JSX.IntrinsicElements }) {
@@ -27,8 +26,8 @@ export function ProjectCard({ project, titleAs }: { project: ProjectItemType, ti
         >
           <div className=''>
             <div className='flex flex-col sm:flex-row justify-center sm:justify-start items-start sm:items-center gap-4'>
-              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full">
-                <Favicon url={project.link.href} src={project.logo} alt={`${project.name} logo`} />
+              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full overflow-hidden">
+                <img src={project.logo} alt={`${project.name} logo`} className="h-12 w-12 object-contain" />
               </div>
               <Component className="text-base font-semibold">
                 {project.name}
@@ -73,8 +72,8 @@ export function ProjectCard({ project, titleAs }: { project: ProjectItemType, ti
         >
           <div className=''>
             <div className='flex flex-col sm:flex-row justify-center sm:justify-start items-start sm:items-center gap-4'>
-              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full">
-                <Favicon url={project.link.href} src={project.logo} alt={`${project.name} logo`} />
+              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full overflow-hidden">
+                <img src={project.logo} alt={`${project.name} logo`} className="h-12 w-12 object-contain" />
               </div>
               <Component className="text-base font-semibold">
                 {project.name}
